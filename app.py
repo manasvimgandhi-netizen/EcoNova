@@ -1,7 +1,7 @@
 # app.py
 """
 EcoNova: Smart Waste Management Ecosystem
-Futuristic Smart City Theme | Deep Learning Vision AI | Municipal Bin Routing
+Smart City Dark Theme | AI Vision & Municipal Bin Color Guidance | Real YouTube Feeds | GIS Map
 """
 
 import copy
@@ -18,32 +18,23 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# ─────────────────────────────────────────────────────────────────────────────
+# 1. COMPLETE STREAMLIT CLOUD THEME OVERRIDE (FORCES DARK CITY THEME)
+# ─────────────────────────────────────────────────────────────────────────────
 st.markdown("""
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<div class="smart-city-bg"></div>
-
 <style>
-.smart-city-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -9999;
-    background-color: #060B14;
-    background-image: 
-        radial-gradient(circle at 10% 15%, rgba(16, 185, 129, 0.28) 0%, transparent 40%),
-        radial-gradient(circle at 90% 85%, rgba(6, 182, 212, 0.22) 0%, transparent 45%),
-        radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.8) 0%, transparent 70%),
-        linear-gradient(rgba(16, 185, 129, 0.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(16, 185, 129, 0.07) 1px, transparent 1px);
-    background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px;
-    pointer-events: none;
+/* Override Streamlit Cloud Root CSS Variables */
+:root {
+    --background-color: #070D18 !important;
+    --secondary-background-color: #0F172A !important;
+    --text-color: #F8FAFC !important;
 }
 
+/* Force dark city background on EVERY container */
 html, body, .stApp, 
 [data-testid="stAppViewContainer"], 
 [data-testid="stAppViewBlockContainer"],
@@ -51,17 +42,26 @@ html, body, .stApp,
 .main, section.main, .block-container,
 div[class*="st-emotion-cache"],
 div[class*="css-"] {
-    background: transparent !important;
+    background-color: #070D18 !important;
+    background-image: 
+        radial-gradient(circle at 10% 15%, rgba(16, 185, 129, 0.22) 0%, transparent 40%),
+        radial-gradient(circle at 90% 85%, rgba(6, 182, 212, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.8) 0%, transparent 70%),
+        linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px) !important;
+    background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px !important;
+    background-attachment: fixed !important;
     color: #F8FAFC !important;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
 }
 
+/* Sidebar Dark Theme */
 [data-testid="stSidebar"], 
 [data-testid="stSidebarContent"],
 [data-testid="stSidebarUserContent"],
 [data-testid="stSidebar"] div[class*="st-emotion-cache"] {
     background-color: #0B1120 !important;
-    border-right: 1px solid rgba(16, 185, 129, 0.3) !important;
+    border-right: 1px solid rgba(16, 185, 129, 0.25) !important;
 }
 
 [data-testid="stSidebar"] .stButton > button {
@@ -74,6 +74,7 @@ div[class*="css-"] {
     margin-bottom: 6px !important;
 }
 
+/* Metric Cards */
 [data-testid="stMetric"] {
     background: rgba(15, 23, 42, 0.85) !important;
     border: 1px solid rgba(16, 185, 129, 0.3) !important;
@@ -93,6 +94,7 @@ div[class*="css-"] {
     text-transform: uppercase !important;
 }
 
+/* Primary and Secondary Buttons */
 .stButton > button[kind="primary"] {
     background: linear-gradient(135deg, #059669 0%, #10B981 100%) !important;
     color: #FFFFFF !important;
@@ -109,6 +111,7 @@ div[class*="css-"] {
     border-radius: 12px !important;
 }
 
+/* Form Inputs, Selectboxes, and Radios */
 .stSelectbox > div > div,
 .stTextInput > div > div,
 .stTextArea > div > div,
@@ -132,6 +135,7 @@ div[class*="css-"] {
     border-radius: 12px !important;
 }
 
+/* Bin Card */
 .bin-card {
     border-radius: 14px;
     padding: 16px 20px;
@@ -141,6 +145,14 @@ div[class*="css-"] {
     gap: 14px;
 }
 
+/* Video Containers */
+[data-testid="stVideo"] {
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+
+/* Text High-Contrast Rules */
 p, span, label, h1, h2, h3, h4, h5, h6, b, strong {
     color: #F8FAFC !important;
 }
@@ -153,7 +165,7 @@ p, span, label, h1, h2, h3, h4, h5, h6, b, strong {
 """, unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────────────────────────────────────
-# STATE
+# 2. STATE INITIALIZATION
 # ─────────────────────────────────────────────────────────────────────────────
 if "citizens" not in st.session_state:
     st.session_state.citizens = copy.deepcopy(data.citizens)
@@ -169,7 +181,7 @@ if "detected_result" not in st.session_state:
 current_user = next((c for c in st.session_state.citizens if c["name"] == st.session_state.active_user_name), st.session_state.citizens[0])
 
 # ─────────────────────────────────────────────────────────────────────────────
-# SIDEBAR
+# 3. SIDEBAR NAVIGATION & AUTHENTICATION
 # ─────────────────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("""
@@ -238,7 +250,7 @@ with st.sidebar:
     st.caption(f"🎖️ Habit Rank: **{current_user['badge']}**")
 
 # ─────────────────────────────────────────────────────────────────────────────
-# HEADER
+# 4. HEADER BAR
 # ─────────────────────────────────────────────────────────────────────────────
 headers = {
     "scan": "📸 AI Waste Scanner & Real-Time Carbon Offset",
@@ -261,7 +273,7 @@ st.markdown(f"""
 
 
 # =============================================================================
-# 1. SCAN WASTE (DEEP LEARNING VISION AI + BIN GUIDANCE)
+# SCREEN 1: SCAN WASTE (VISION & BIN GUIDANCE)
 # =============================================================================
 if st.session_state.active_nav == "scan":
     c_left, c_right = st.columns([1, 1], gap="large")
@@ -282,33 +294,29 @@ if st.session_state.active_nav == "scan":
                 st.image(up, use_container_width=True)
         else:
             preset = st.selectbox("Select Preset Demo Item:", [
-                "Textiles (Fabric Cloth / Towel / Clothes)",
                 "E-Waste (Computer Mouse / Cable / Hardware)",
                 "Stainless Steel / Metal Water Bottle",
                 "PET Plastic Bottle (Clean Recyclable)",
                 "Cardboard Box Packaging",
                 "Organic Food Scraps"
             ])
-            if "Textiles" in preset:
-                st.session_state.detected_result = {"category": "Textiles", "label": "Textile & Fabric (Cloth / Towel / Scraps)", "confidence": 98.6, "tip": logic.SORTING_TIPS["Textiles"], "auto_weight": 0.35, "bin_info": logic.get_bin_info("Textiles")}
-            elif "E-Waste" in preset:
-                st.session_state.detected_result = {"category": "E-Waste", "label": "E-Waste Hardware (Computer Mouse / Gadget)", "confidence": 97.8, "tip": logic.SORTING_TIPS["E-Waste"], "auto_weight": 0.25, "bin_info": logic.get_bin_info("E-Waste")}
+            if "E-Waste" in preset:
+                st.session_state.detected_result = {"category": "E-Waste", "label": "E-Waste / Tech Hardware (Computer Peripheral / Gadget)", "confidence": 97.6, "tip": logic.SORTING_TIPS["E-Waste"], "auto_weight": 0.25, "bin_info": logic.get_bin_info("E-Waste")}
             elif "Metal" in preset:
-                st.session_state.detected_result = {"category": "Metal", "label": "Metal & Aluminium (Stainless Steel Flask)", "confidence": 98.4, "tip": logic.SORTING_TIPS["Metal"], "auto_weight": 0.30, "bin_info": logic.get_bin_info("Metal")}
+                st.session_state.detected_result = {"category": "Metal", "label": "Metal & Aluminium (Stainless Steel / Can / Foil)", "confidence": 98.2, "tip": logic.SORTING_TIPS["Metal"], "auto_weight": 0.30, "bin_info": logic.get_bin_info("Metal")}
             elif "Plastic" in preset:
-                st.session_state.detected_result = {"category": "Plastic", "label": "Plastic Material (PET Bottle)", "confidence": 96.2, "tip": logic.SORTING_TIPS["Plastic"], "auto_weight": 0.08, "bin_info": logic.get_bin_info("Plastic")}
+                st.session_state.detected_result = {"category": "Plastic", "label": "Synthetic Plastic / Packaging Container", "confidence": 95.8, "tip": logic.SORTING_TIPS["Plastic"], "auto_weight": 0.08, "bin_info": logic.get_bin_info("Plastic")}
             elif "Cardboard" in preset:
-                st.session_state.detected_result = {"category": "Paper", "label": "Paper & Packaging (Cardboard Box)", "confidence": 95.8, "tip": logic.SORTING_TIPS["Paper"], "auto_weight": 0.20, "bin_info": logic.get_bin_info("Paper")}
+                st.session_state.detected_result = {"category": "Paper", "label": "Cardboard Box / Kraft Paper Packaging", "confidence": 95.0, "tip": logic.SORTING_TIPS["Paper"], "auto_weight": 0.20, "bin_info": logic.get_bin_info("Paper")}
             else:
-                st.session_state.detected_result = {"category": "Organic", "label": "Organic Wet Waste (Fruit Scraps / Food)", "confidence": 95.0, "tip": logic.SORTING_TIPS["Organic"], "auto_weight": 0.40, "bin_info": logic.get_bin_info("Organic")}
+                st.session_state.detected_result = {"category": "Organic", "label": "Organic & Wet Food Waste (Compostable)", "confidence": 94.5, "tip": logic.SORTING_TIPS["Organic"], "auto_weight": 0.40, "bin_info": logic.get_bin_info("Organic")}
 
-        # Run Deep Learning Vision Inference
         if img_data:
             st.session_state.detected_result = logic.analyze_waste_image(img_data)
 
         st.markdown("#### 🏷️ Classification Confirmation")
-        cat_options = ["Textiles", "E-Waste", "Metal", "Plastic", "Paper", "Organic", "Glass", "Hazardous"]
-        detected_cat = st.session_state.detected_result["category"] if st.session_state.detected_result else "Textiles"
+        cat_options = ["E-Waste", "Metal", "Plastic", "Paper", "Organic", "Glass", "Textiles", "Hazardous"]
+        detected_cat = st.session_state.detected_result["category"] if st.session_state.detected_result else "E-Waste"
         chosen_cat = st.selectbox("Category Override (if needed):", cat_options, index=cat_options.index(detected_cat) if detected_cat in cat_options else 0)
 
         auto_w = logic.DEFAULT_CATEGORY_WEIGHTS.get(chosen_cat, 0.25)
@@ -326,7 +334,7 @@ if st.session_state.active_nav == "scan":
         st.markdown("### 🌍 Real-Time AI Detection & Bin Segregation")
         if st.session_state.detected_result:
             res = st.session_state.detected_result
-            st.success(f"✅ **Deep Learning Detection:** {res['label']} ({res['confidence']}% Confidence)")
+            st.success(f"✅ **AI Detection:** {res['label']} ({res['confidence']}% Confidence)")
             
             bin_meta = logic.get_bin_info(chosen_cat)
             st.markdown(f"""
@@ -334,7 +342,7 @@ if st.session_state.active_nav == "scan":
               <div style="font-size:2.2rem;">{bin_meta['icon']}</div>
               <div>
                 <div style="font-size:0.75rem; font-weight:800; color:{bin_meta['badge_color']}; text-transform:uppercase; letter-spacing:0.06em;">
-                  Required Disposal Bin ({bin_meta['bin_color']})
+                  Required Disposal Bin ({bin_meta['bin_color']} Bin)
                 </div>
                 <div style="font-size:1.1rem; font-weight:800; color:#FFFFFF; margin-top:2px;">
                   {bin_meta['bin_name']}
@@ -358,40 +366,48 @@ if st.session_state.active_nav == "scan":
 
 
 # =============================================================================
-# 2. ECO SHORTS FEED
+# SCREEN 2: ECO SHORTS (POWERED BY RELIABLE YOUTUBE STREAMING)
 # =============================================================================
 elif st.session_state.active_nav == "eco":
     col_reel, col_side = st.columns([1.3, 0.7], gap="large")
 
     with col_reel:
         st.markdown("""
-        <div style="background: linear-gradient(135deg, rgba(6, 95, 70, 0.7) 0%, rgba(4, 120, 87, 0.5) 100%); border: 1px solid rgba(16, 185, 129, 0.5); border-radius: 20px; padding: 22px; margin-bottom: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+        <div style="background: linear-gradient(135deg, rgba(6, 95, 70, 0.7) 0%, rgba(4, 120, 87, 0.5) 100%); border: 1px solid rgba(16, 185, 129, 0.5); border-radius: 20px; padding: 22px; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
           <div style="background:rgba(16,185,129,0.25); color:#34D399; border:1px solid #10B981; border-radius:99px; padding:3px 12px; font-size:0.75rem; font-weight:700; display:inline-block; margin-bottom:10px;">🌱 DIY Reuse</div>
-          <h3 style="margin:0 0 6px 0; color:#FFFFFF;">How I turned 5 plastic bottles into a vertical planter</h3>
-          <p style="color:#A7F3D0; font-size:0.85rem; margin-bottom:14px;">@rewild.pune • 15s Green Byte</p>
+          <h3 style="margin:0 0 6px 0; color:#FFFFFF;">How 5 Plastic Bottles Become a Self-Watering Planter</h3>
+          <p style="color:#A7F3D0; font-size:0.85rem; margin-bottom:14px;">@rewild.pune • 30s Green Byte</p>
         </div>
         """, unsafe_allow_html=True)
-        st.video("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")
+        # Working verified YouTube stream
+        st.video("https://www.youtube.com/watch?v=7U74BLxL6CQ")
         st.markdown("<div style='display:flex; gap:24px; margin-top:8px; color:#94A3B8; font-weight:600;'><span>❤️ 1,240</span><span>💬 86</span><span>↗️ Share</span><span>🔖 Save</span></div>", unsafe_allow_html=True)
 
         st.divider()
 
         st.markdown("""
-        <div style="background: linear-gradient(135deg, rgba(30, 64, 175, 0.7) 0%, rgba(29, 78, 216, 0.5) 100%); border: 1px solid rgba(59, 130, 246, 0.5); border-radius: 20px; padding: 22px; margin-bottom: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+        <div style="background: linear-gradient(135deg, rgba(30, 64, 175, 0.7) 0%, rgba(29, 78, 216, 0.5) 100%); border: 1px solid rgba(59, 130, 246, 0.5); border-radius: 20px; padding: 22px; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
           <div style="background:rgba(59, 130, 246, 0.25); color:#93C5FD; border:1px solid #3B82F6; border-radius:99px; padding:3px 12px; font-size:0.75rem; font-weight:700; display:inline-block; margin-bottom:10px;">💡 Waste Facts</div>
           <h3 style="margin:0 0 6px 0; color:#FFFFFF;">Why Aluminium Cans are 100% Infinitely Recyclable</h3>
           <p style="color:#BFDBFE; font-size:0.85rem; margin-bottom:14px;">@zerowaste.lab • Pune Civic Initiative</p>
         </div>
         """, unsafe_allow_html=True)
-        st.video("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4")
+        # Working verified YouTube stream
+        st.video("https://www.youtube.com/watch?v=8q7_aV845LA")
 
     with col_side:
-        st.markdown("### 🌿 Segregation Golden Rule")
-        st.info("🟢 **Green Bin**: Wet & Kitchen Waste\n\n🔵 **Blue Bin**: Dry Recyclables (Plastic, Paper, Metal, Glass)\n\n🟣 **Textile Bin**: Clothes & Fabrics\n\n⚫ **Black Bin**: E-Waste Drop-off\n\n🔴 **Red Bin**: Hazardous & Sanitary")
+        st.markdown("### 🌿 Segregation Golden Rules")
+        st.markdown("""
+        * 🟢 **Green Bin**: Wet & Kitchen Food Waste
+        * 🔵 **Blue Bin**: Dry Recyclables (Plastic, Paper, Metal, Glass)
+        * ⚫ **Black Bin**: E-Waste Drop-off (Gadgets & Cables)
+        * 🔴 **Red Bin**: Hazardous & Sanitary Items
+        """)
+        st.info("💡 **Did you know?** Recycling one aluminum can saves enough energy to run a TV for 3 hours!")
 
 
 # =============================================================================
-# 3. COMMUNITY MAP & DRIVER DISPATCH
+# SCREEN 3: GIS COMMUNITY MAP
 # =============================================================================
 elif st.session_state.active_nav == "community":
     map_col, form_col = st.columns([1.2, 0.8], gap="large")
@@ -452,7 +468,7 @@ elif st.session_state.active_nav == "community":
 
 
 # =============================================================================
-# 4. SYSTEM OVERVIEW
+# SCREEN 4: SYSTEM OVERVIEW
 # =============================================================================
 elif st.session_state.active_nav == "home":
     m1, m2, m3 = st.columns(3)
