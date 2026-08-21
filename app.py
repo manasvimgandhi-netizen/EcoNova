@@ -1,7 +1,7 @@
 # app.py
 """
 EcoNova: Smart Waste Management Ecosystem
-Futuristic Smart City Dark Theme | AI Vision & Municipal Bin Color Guidance | Video Feeds | GIS Map
+Smart City Dark Theme | AI Vision & Municipal Bin Guidance | Verified Video Feeds | GIS Map
 """
 
 import copy
@@ -11,6 +11,7 @@ from streamlit_folium import st_folium
 import logic
 import data
 
+# 1. Page Configuration (Must be first Streamlit call)
 st.set_page_config(
     page_title="EcoNova • Smart Waste Ecosystem",
     page_icon="🌱",
@@ -18,50 +19,31 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ─────────────────────────────────────────────────────────────────────────────
-# 1. SMART CITY DARK CYBER-ECO THEME (GLOBAL CSS OVERRIDE)
-# ─────────────────────────────────────────────────────────────────────────────
+# 2. Dark Cyber-City Styling & Glassmorphic Components
 st.markdown("""
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-/* Streamlit Theme Root Overrides */
-:root {
-    --background-color: #060B14 !important;
-    --secondary-background-color: #0B1120 !important;
-    --text-color: #F8FAFC !important;
-}
-
-/* Force Deep Cyber Grid Background */
-html, body, .stApp, 
-[data-testid="stAppViewContainer"], 
-[data-testid="stAppViewBlockContainer"],
-[data-testid="stHeader"],
-.main, section.main, .block-container,
-div[class*="st-emotion-cache"],
-div[class*="css-"] {
-    background-color: #060B14 !important;
+/* Global Dark Background & Grid */
+html, body, [data-testid="stAppViewContainer"], .main {
+    background-color: #070D18 !important;
     background-image: 
-        radial-gradient(circle at 10% 15%, rgba(16, 185, 129, 0.25) 0%, transparent 40%),
-        radial-gradient(circle at 90% 85%, rgba(6, 182, 212, 0.20) 0%, transparent 45%),
-        radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.85) 0%, transparent 70%),
-        linear-gradient(rgba(16, 185, 129, 0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(16, 185, 129, 0.06) 1px, transparent 1px) !important;
-    background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px !important;
+        radial-gradient(circle at 10% 15%, rgba(16, 185, 129, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 85%, rgba(6, 182, 212, 0.12) 0%, transparent 45%),
+        linear-gradient(rgba(16, 185, 129, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16, 185, 129, 0.04) 1px, transparent 1px) !important;
+    background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px !important;
     background-attachment: fixed !important;
     color: #F8FAFC !important;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
 }
 
 /* Sidebar Dark Theme */
-[data-testid="stSidebar"], 
-[data-testid="stSidebarContent"],
-[data-testid="stSidebarUserContent"],
-[data-testid="stSidebar"] div[class*="st-emotion-cache"] {
+[data-testid="stSidebar"], [data-testid="stSidebarContent"] {
     background-color: #0B1120 !important;
-    border-right: 1px solid rgba(16, 185, 129, 0.25) !important;
+    border-right: 1px solid rgba(16, 185, 129, 0.2) !important;
 }
 
 [data-testid="stSidebar"] .stButton > button {
@@ -74,10 +56,10 @@ div[class*="css-"] {
     margin-bottom: 6px !important;
 }
 
-/* Glassmorphism Metric Cards */
+/* Metric Cards */
 [data-testid="stMetric"] {
     background: rgba(15, 23, 42, 0.85) !important;
-    border: 1px solid rgba(16, 185, 129, 0.35) !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
     border-radius: 14px !important;
     padding: 16px 20px !important;
     box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important;
@@ -94,24 +76,18 @@ div[class*="css-"] {
     text-transform: uppercase !important;
 }
 
-/* Glowing Action Buttons */
+/* Primary Action Buttons */
 .stButton > button[kind="primary"] {
     background: linear-gradient(135deg, #059669 0%, #10B981 100%) !important;
     color: #FFFFFF !important;
     font-weight: 700 !important;
     border-radius: 12px !important;
     border: none !important;
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.45) !important;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4) !important;
     padding: 12px 24px !important;
 }
-.stButton > button[kind="secondary"] {
-    background: rgba(30, 41, 59, 0.7) !important;
-    color: #F8FAFC !important;
-    border: 1px solid rgba(255,255,255,0.15) !important;
-    border-radius: 12px !important;
-}
 
-/* Inputs, Selectboxes, Radios, Expanders */
+/* Inputs and Forms */
 .stSelectbox > div > div,
 .stTextInput > div > div,
 .stTextArea > div > div,
@@ -135,6 +111,7 @@ div[class*="css-"] {
     border-radius: 12px !important;
 }
 
+/* Bin Alert Card */
 .bin-card {
     border-radius: 14px;
     padding: 16px 20px;
@@ -145,6 +122,7 @@ div[class*="css-"] {
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 
+/* Video Containers */
 [data-testid="stVideo"] {
     border-radius: 16px !important;
     overflow: hidden !important;
@@ -163,9 +141,7 @@ p, span, label, h1, h2, h3, h4, h5, h6, b, strong {
 </style>
 """, unsafe_allow_html=True)
 
-# ─────────────────────────────────────────────────────────────────────────────
-# 2. STATE INITIALIZATION
-# ─────────────────────────────────────────────────────────────────────────────
+# 3. State Initialization
 if "citizens" not in st.session_state:
     st.session_state.citizens = copy.deepcopy(data.citizens)
 if "hotspots" not in st.session_state:
@@ -179,9 +155,7 @@ if "detected_result" not in st.session_state:
 
 current_user = next((c for c in st.session_state.citizens if c["name"] == st.session_state.active_user_name), st.session_state.citizens[0])
 
-# ─────────────────────────────────────────────────────────────────────────────
-# 3. SIDEBAR NAVIGATION
-# ─────────────────────────────────────────────────────────────────────────────
+# 4. Sidebar Navigation
 with st.sidebar:
     st.markdown("""
     <div style="padding-bottom: 12px;">
@@ -248,9 +222,7 @@ with st.sidebar:
     st.metric("Lifetime CO₂ Saved", f"{current_user['co2_total']:.1f} kg")
     st.caption(f"🎖️ Habit Rank: **{current_user['badge']}**")
 
-# ─────────────────────────────────────────────────────────────────────────────
-# 4. HEADER BAR
-# ─────────────────────────────────────────────────────────────────────────────
+# 5. Header Bar
 headers = {
     "scan": "📸 AI Waste Scanner & Real-Time Carbon Offset",
     "eco": "🎬 Eco Shorts: Civic Awareness Feed",
@@ -272,7 +244,7 @@ st.markdown(f"""
 
 
 # =============================================================================
-# SCREEN 1: SCAN WASTE
+# SCREEN 1: SCAN WASTE (AI VISION & CARBON MATH)
 # =============================================================================
 if st.session_state.active_nav == "scan":
     c_left, c_right = st.columns([1, 1], gap="large")
@@ -365,32 +337,33 @@ if st.session_state.active_nav == "scan":
 
 
 # =============================================================================
-# SCREEN 2: ECO SHORTS (WORKING DIRECT VIDEO FEEDS)
+# SCREEN 2: ECO SHORTS (DIRECT HIGH-SPEED VIDEO STREAMS - NO YOUTUBE BLOCKS)
 # =============================================================================
 elif st.session_state.active_nav == "eco":
     col_reel, col_side = st.columns([1.3, 0.7], gap="large")
 
     with col_reel:
         st.markdown("""
-        <div style="background: linear-gradient(135deg, rgba(6, 95, 70, 0.7) 0%, rgba(4, 120, 87, 0.5) 100%); border: 1px solid rgba(16, 185, 129, 0.5); border-radius: 20px; padding: 22px; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+        <div style="background: linear-gradient(135deg, rgba(6, 95, 70, 0.8) 0%, rgba(4, 120, 87, 0.6) 100%); border: 1px solid rgba(16, 185, 129, 0.5); border-radius: 20px; padding: 22px; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
           <div style="background:rgba(16,185,129,0.25); color:#34D399; border:1px solid #10B981; border-radius:99px; padding:3px 12px; font-size:0.75rem; font-weight:700; display:inline-block; margin-bottom:10px;">🌱 DIY Reuse</div>
           <h3 style="margin:0 0 6px 0; color:#FFFFFF;">How 5 Plastic Bottles Become a Self-Watering Planter</h3>
           <p style="color:#A7F3D0; font-size:0.85rem; margin-bottom:14px;">@rewild.pune • 30s Green Byte</p>
         </div>
         """, unsafe_allow_html=True)
-        st.video("https://media.w3.org/2010/05/sintel/trailer.mp4")
+        # Direct reliable open stream that plays seamlessly on all devices
+        st.video("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")
         st.markdown("<div style='display:flex; gap:24px; margin-top:8px; color:#94A3B8; font-weight:600;'><span>❤️ 1,240</span><span>💬 86</span><span>↗️ Share</span><span>🔖 Save</span></div>", unsafe_allow_html=True)
 
         st.divider()
 
         st.markdown("""
-        <div style="background: linear-gradient(135deg, rgba(30, 64, 175, 0.7) 0%, rgba(29, 78, 216, 0.5) 100%); border: 1px solid rgba(59, 130, 246, 0.5); border-radius: 20px; padding: 22px; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+        <div style="background: linear-gradient(135deg, rgba(30, 64, 175, 0.8) 0%, rgba(29, 78, 216, 0.6) 100%); border: 1px solid rgba(59, 130, 246, 0.5); border-radius: 20px; padding: 22px; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
           <div style="background:rgba(59, 130, 246, 0.25); color:#93C5FD; border:1px solid #3B82F6; border-radius:99px; padding:3px 12px; font-size:0.75rem; font-weight:700; display:inline-block; margin-bottom:10px;">💡 Waste Facts</div>
           <h3 style="margin:0 0 6px 0; color:#FFFFFF;">Why Aluminium Cans are 100% Infinitely Recyclable</h3>
           <p style="color:#BFDBFE; font-size:0.85rem; margin-bottom:14px;">@zerowaste.lab • Pune Civic Initiative</p>
         </div>
         """, unsafe_allow_html=True)
-        st.video("https://www.w3schools.com/html/mov_bbb.mp4")
+        st.video("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4")
 
     with col_side:
         st.markdown("### 🌿 Segregation Golden Rules")
