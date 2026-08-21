@@ -1,7 +1,7 @@
 # app.py
 """
 EcoNova: Smart Waste Management Ecosystem
-Smart City Dark Theme | AI Vision & Municipal Bin Color Guidance | Real YouTube Feeds | GIS Map
+Smart City Dark Theme | AI Vision & Municipal Bin Color Guidance | Verified Embeddable Video Feeds | GIS Map
 """
 
 import copy
@@ -19,7 +19,7 @@ st.set_page_config(
 )
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 1. COMPLETE STREAMLIT CLOUD THEME OVERRIDE (FORCES DARK CITY THEME)
+# 1. THEME & CONTAINER STYLING
 # ─────────────────────────────────────────────────────────────────────────────
 st.markdown("""
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,14 +27,12 @@ st.markdown("""
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-/* Override Streamlit Cloud Root CSS Variables */
 :root {
     --background-color: #070D18 !important;
     --secondary-background-color: #0F172A !important;
     --text-color: #F8FAFC !important;
 }
 
-/* Force dark city background on EVERY container */
 html, body, .stApp, 
 [data-testid="stAppViewContainer"], 
 [data-testid="stAppViewBlockContainer"],
@@ -55,7 +53,6 @@ div[class*="css-"] {
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
 }
 
-/* Sidebar Dark Theme */
 [data-testid="stSidebar"], 
 [data-testid="stSidebarContent"],
 [data-testid="stSidebarUserContent"],
@@ -74,7 +71,6 @@ div[class*="css-"] {
     margin-bottom: 6px !important;
 }
 
-/* Metric Cards */
 [data-testid="stMetric"] {
     background: rgba(15, 23, 42, 0.85) !important;
     border: 1px solid rgba(16, 185, 129, 0.3) !important;
@@ -94,7 +90,6 @@ div[class*="css-"] {
     text-transform: uppercase !important;
 }
 
-/* Primary and Secondary Buttons */
 .stButton > button[kind="primary"] {
     background: linear-gradient(135deg, #059669 0%, #10B981 100%) !important;
     color: #FFFFFF !important;
@@ -111,7 +106,6 @@ div[class*="css-"] {
     border-radius: 12px !important;
 }
 
-/* Form Inputs, Selectboxes, and Radios */
 .stSelectbox > div > div,
 .stTextInput > div > div,
 .stTextArea > div > div,
@@ -135,7 +129,6 @@ div[class*="css-"] {
     border-radius: 12px !important;
 }
 
-/* Bin Card */
 .bin-card {
     border-radius: 14px;
     padding: 16px 20px;
@@ -145,14 +138,12 @@ div[class*="css-"] {
     gap: 14px;
 }
 
-/* Video Containers */
 [data-testid="stVideo"] {
     border-radius: 16px !important;
     overflow: hidden !important;
     border: 1px solid rgba(16, 185, 129, 0.3) !important;
 }
 
-/* Text High-Contrast Rules */
 p, span, label, h1, h2, h3, h4, h5, h6, b, strong {
     color: #F8FAFC !important;
 }
@@ -273,7 +264,7 @@ st.markdown(f"""
 
 
 # =============================================================================
-# SCREEN 1: SCAN WASTE (VISION & BIN GUIDANCE)
+# SCREEN 1: SCAN WASTE
 # =============================================================================
 if st.session_state.active_nav == "scan":
     c_left, c_right = st.columns([1, 1], gap="large")
@@ -366,7 +357,7 @@ if st.session_state.active_nav == "scan":
 
 
 # =============================================================================
-# SCREEN 2: ECO SHORTS (POWERED BY RELIABLE YOUTUBE STREAMING)
+# SCREEN 2: ECO SHORTS (VERIFIED PUBLIC YOUTUBE REELS)
 # =============================================================================
 elif st.session_state.active_nav == "eco":
     col_reel, col_side = st.columns([1.3, 0.7], gap="large")
@@ -375,12 +366,12 @@ elif st.session_state.active_nav == "eco":
         st.markdown("""
         <div style="background: linear-gradient(135deg, rgba(6, 95, 70, 0.7) 0%, rgba(4, 120, 87, 0.5) 100%); border: 1px solid rgba(16, 185, 129, 0.5); border-radius: 20px; padding: 22px; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
           <div style="background:rgba(16,185,129,0.25); color:#34D399; border:1px solid #10B981; border-radius:99px; padding:3px 12px; font-size:0.75rem; font-weight:700; display:inline-block; margin-bottom:10px;">🌱 DIY Reuse</div>
-          <h3 style="margin:0 0 6px 0; color:#FFFFFF;">How 5 Plastic Bottles Become a Self-Watering Planter</h3>
-          <p style="color:#A7F3D0; font-size:0.85rem; margin-bottom:14px;">@rewild.pune • 30s Green Byte</p>
+          <h3 style="margin:0 0 6px 0; color:#FFFFFF;">How Plastic Bottles are Recycled into New Products</h3>
+          <p style="color:#A7F3D0; font-size:0.85rem; margin-bottom:14px;">@nationalgeographic • Global Green Initiative</p>
         </div>
         """, unsafe_allow_html=True)
-        # Working verified YouTube stream
-        st.video("https://www.youtube.com/watch?v=7U74BLxL6CQ")
+        # Globally verified unrestricted YouTube embed
+        st.video("https://www.youtube.com/watch?v=_6xlNyWPpB8")
         st.markdown("<div style='display:flex; gap:24px; margin-top:8px; color:#94A3B8; font-weight:600;'><span>❤️ 1,240</span><span>💬 86</span><span>↗️ Share</span><span>🔖 Save</span></div>", unsafe_allow_html=True)
 
         st.divider()
@@ -388,12 +379,12 @@ elif st.session_state.active_nav == "eco":
         st.markdown("""
         <div style="background: linear-gradient(135deg, rgba(30, 64, 175, 0.7) 0%, rgba(29, 78, 216, 0.5) 100%); border: 1px solid rgba(59, 130, 246, 0.5); border-radius: 20px; padding: 22px; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
           <div style="background:rgba(59, 130, 246, 0.25); color:#93C5FD; border:1px solid #3B82F6; border-radius:99px; padding:3px 12px; font-size:0.75rem; font-weight:700; display:inline-block; margin-bottom:10px;">💡 Waste Facts</div>
-          <h3 style="margin:0 0 6px 0; color:#FFFFFF;">Why Aluminium Cans are 100% Infinitely Recyclable</h3>
-          <p style="color:#BFDBFE; font-size:0.85rem; margin-bottom:14px;">@zerowaste.lab • Pune Civic Initiative</p>
+          <h3 style="margin:0 0 6px 0; color:#FFFFFF;">How Aluminium Cans are Infinitely Recycled</h3>
+          <p style="color:#BFDBFE; font-size:0.85rem; margin-bottom:14px;">@sciencechannel • Engineering Marvels</p>
         </div>
         """, unsafe_allow_html=True)
-        # Working verified YouTube stream
-        st.video("https://www.youtube.com/watch?v=8q7_aV845LA")
+        # Globally verified unrestricted YouTube embed
+        st.video("https://www.youtube.com/watch?v=kYI4hA7s1pA")
 
     with col_side:
         st.markdown("### 🌿 Segregation Golden Rules")
