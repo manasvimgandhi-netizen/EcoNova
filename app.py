@@ -23,14 +23,12 @@ st.set_page_config(
 # ─────────────────────────────────────────────────────────────────────────────
 # 2. AESTHETIC CYBER-ECO GLASSMORPHISM DESIGN SYSTEM
 # ─────────────────────────────────────────────────────────────────────────────
-
 st.markdown("""
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
-
 /* Base Typography & Canvas */
 * {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
@@ -43,18 +41,20 @@ h1, h2, h3, .brand-font {
 
 /* Premium Eco-Ivory Background */
 html, body, .stApp, [data-testid="stAppViewContainer"], .main {
-    background-color: #F4F1E8 !important;
+    background-color: #F3F0E7 !important;
     background-image:
-        radial-gradient(circle at 15% 20%, rgba(69, 111, 86, 0.07) 0%, transparent 32%),
-        radial-gradient(circle at 85% 75%, rgba(122, 142, 102, 0.06) 0%, transparent 35%),
-        repeating-radial-gradient(
-            ellipse at 20% 40%,
+        radial-gradient(circle at 12% 18%, rgba(58, 104, 76, 0.10) 0%, transparent 38%),
+        radial-gradient(circle at 88% 72%, rgba(121, 145, 101, 0.08) 0%, transparent 42%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.40) 0%, transparent 45%),
+        repeating-linear-gradient(
+            115deg,
             transparent 0px,
-            transparent 28px,
-            rgba(47, 79, 58, 0.025) 29px,
-            transparent 31px
+            transparent 78px,
+            rgba(47, 79, 58, 0.025) 79px,
+            rgba(47, 79, 58, 0.025) 81px,
+            transparent 82px
         ) !important;
-    background-size: 100% 100%, 100% 100%, 420px 420px !important;
+    background-size: 100% 100%, 100% 100%, 100% 100%, 180px 180px !important;
     background-attachment: fixed !important;
     color: #243B2F !important;
 }
@@ -219,17 +219,13 @@ p, span, label, h1, h2, h3, h4, h5, h6, b, strong {
     color: #94A3B8 !important;
 }
 
-#MainMenu, footer, [data-testid="stToolbar"] {
-    visibility: hidden;
-}
-
+#MainMenu, footer, [data-testid="stToolbar"] { visibility: hidden; }
 </style>
 """, unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 3. STATE INITIALIZATION
 # ─────────────────────────────────────────────────────────────────────────────
-
 if "citizens" not in st.session_state:
     st.session_state.citizens = copy.deepcopy(data.citizens)
 
@@ -246,18 +242,14 @@ if "detected_result" not in st.session_state:
     st.session_state.detected_result = None
 
 current_user = next(
-    (
-        c
-        for c in st.session_state.citizens
-        if c["name"] == st.session_state.active_user_name
-    ),
+    (c for c in st.session_state.citizens
+     if c["name"] == st.session_state.active_user_name),
     st.session_state.citizens[0]
 )
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 4. SIDEBAR BRANDING & AUTHENTICATION
 # ─────────────────────────────────────────────────────────────────────────────
-
 with st.sidebar:
 
     st.markdown("""
@@ -352,7 +344,6 @@ with st.sidebar:
             use_container_width=True
         ):
             if new_name.strip():
-
                 new_profile = {
                     "id": f"c{len(st.session_state.citizens)+1}",
                     "name": new_name.strip(),
@@ -364,14 +355,11 @@ with st.sidebar:
                 }
 
                 st.session_state.citizens.append(new_profile)
-
                 st.session_state.active_user_name = new_name.strip()
-
                 st.toast(
                     f"Welcome {new_name}! Logged in.",
                     icon="🌿"
                 )
-
                 st.rerun()
 
     st.metric(
@@ -391,7 +379,6 @@ with st.sidebar:
 # ─────────────────────────────────────────────────────────────────────────────
 # 5. HEADER BAR
 # ─────────────────────────────────────────────────────────────────────────────
-
 headers = {
     "scan": "📸 AI Waste Scanner & Carbon Impact Matrix",
     "eco": "🎬 Eco Shorts: Civic Micro-Learning Feed",
@@ -403,42 +390,24 @@ st.markdown(f"""
 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 28px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 18px;">
   <div>
     <h2 style="margin:0; font-weight:800; font-size:1.65rem; color:#F8FAFC;" class="brand-font">{headers.get(st.session_state.active_nav, 'EcoNova')}</h2>
-
-    <span style="color:#64748B; font-size:0.85rem; font-weight:500;">
-        Authenticated Citizen:
-        <b style="color:#00F5A0;">
-            {current_user['name']}
-        </b>
-        ({current_user['neighborhood']})
-    </span>
-
+    <span style="color:#64748B; font-size:0.85rem; font-weight:500;">Authenticated Citizen: <b style="color:#00F5A0;">{current_user['name']}</b> ({current_user['neighborhood']})</span>
   </div>
-
   <div>
-    <span style="background:linear-gradient(135deg, rgba(0,245,160,0.15) 0%, rgba(0,217,245,0.15) 100%); color:#00F5A0; border:1px solid #00F5A0; font-weight:800; padding:8px 20px; border-radius:99px; font-size:0.88rem; box-shadow:0 0 15px rgba(0,245,160,0.2);">
-        ⚡ {current_user['points']} XP
-    </span>
+    <span style="background:linear-gradient(135deg, rgba(0,245,160,0.15) 0%, rgba(0,217,245,0.15) 100%); color:#00F5A0; border:1px solid #00F5A0; font-weight:800; padding:8px 20px; border-radius:99px; font-size:0.88rem; box-shadow:0 0 15px rgba(0,245,160,0.2);">⚡ {current_user['points']} XP</span>
   </div>
-
 </div>
 """, unsafe_allow_html=True)
 
 # =============================================================================
 # SCREEN 1: SCAN WASTE (AI VISION & CARBON MATRIX)
 # =============================================================================
-
 if st.session_state.active_nav == "scan":
 
-    c_left, c_right = st.columns(
-        [1, 1],
-        gap="large"
-    )
+    c_left, c_right = st.columns([1, 1], gap="large")
 
     with c_left:
 
-        st.markdown(
-            "### 📸 Point Camera or Select Demo"
-        )
+        st.markdown("### 📸 Point Camera or Select Demo")
 
         mode = st.radio(
             "Capture Stream:",
@@ -470,10 +439,7 @@ if st.session_state.active_nav == "scan":
 
             if up:
                 img_data = up.getvalue()
-                st.image(
-                    up,
-                    use_container_width=True
-                )
+                st.image(up, use_container_width=True)
 
         else:
 
@@ -489,7 +455,6 @@ if st.session_state.active_nav == "scan":
             )
 
             if "E-Waste" in preset:
-
                 st.session_state.detected_result = {
                     "category": "E-Waste",
                     "label": "E-Waste / Tech Hardware (Computer Peripheral / Gadget)",
@@ -500,7 +465,6 @@ if st.session_state.active_nav == "scan":
                 }
 
             elif "Metal" in preset:
-
                 st.session_state.detected_result = {
                     "category": "Metal",
                     "label": "Metal & Aluminium (Stainless Steel / Can / Foil)",
@@ -511,7 +475,6 @@ if st.session_state.active_nav == "scan":
                 }
 
             elif "Plastic" in preset:
-
                 st.session_state.detected_result = {
                     "category": "Plastic",
                     "label": "Synthetic Plastic / Packaging Container",
@@ -522,7 +485,6 @@ if st.session_state.active_nav == "scan":
                 }
 
             elif "Cardboard" in preset:
-
                 st.session_state.detected_result = {
                     "category": "Paper",
                     "label": "Cardboard Box / Kraft Paper Packaging",
@@ -533,7 +495,6 @@ if st.session_state.active_nav == "scan":
                 }
 
             else:
-
                 st.session_state.detected_result = {
                     "category": "Organic",
                     "label": "Organic & Wet Food Waste (Compostable)",
@@ -544,13 +505,11 @@ if st.session_state.active_nav == "scan":
                 }
 
         if img_data:
-            st.session_state.detected_result = (
-                logic.analyze_waste_image(img_data)
+            st.session_state.detected_result = logic.analyze_waste_image(
+                img_data
             )
 
-        st.markdown(
-            "#### 🏷️ Classification Verification"
-        )
+        st.markdown("#### 🏷️ Classification Verification")
 
         cat_options = [
             "E-Waste",
@@ -605,9 +564,7 @@ if st.session_state.active_nav == "scan":
                 is_correct=True
             )
 
-            current_user["co2_total"] += (
-                impact["co2_saved_kg"]
-            )
+            current_user["co2_total"] += impact["co2_saved_kg"]
 
             st.balloons()
 
@@ -621,9 +578,7 @@ if st.session_state.active_nav == "scan":
 
     with c_right:
 
-        st.markdown(
-            "### 🌍 Real-Time AI Detection & Bin Routing"
-        )
+        st.markdown("### 🌍 Real-Time AI Detection & Bin Routing")
 
         if st.session_state.detected_result:
 
@@ -631,50 +586,25 @@ if st.session_state.active_nav == "scan":
 
             st.markdown(f"""
             <div style="background:rgba(0,245,160,0.08); border:1px solid rgba(0,245,160,0.3); border-radius:14px; padding:14px 18px; margin-bottom:14px;">
-
-              <span style="color:#00F5A0; font-weight:800;">
-                ✅ AI CLASSIFICATION:
-              </span>
-
-              <span style="font-weight:700;">
-                {res['label']}
-              </span>
-
-              <span style="background:rgba(0,245,160,0.2); color:#00F5A0; padding:2px 8px; border-radius:99px; font-size:0.75rem; font-weight:800; margin-left:8px;">
-                {res['confidence']}% MATCH
-              </span>
-
+              <span style="color:#00F5A0; font-weight:800;">✅ AI CLASSIFICATION:</span>
+              <span style="font-weight:700;">{res['label']}</span>
+              <span style="background:rgba(0,245,160,0.2); color:#00F5A0; padding:2px 8px; border-radius:99px; font-size:0.75rem; font-weight:800; margin-left:8px;">{res['confidence']}% MATCH</span>
             </div>
             """, unsafe_allow_html=True)
 
-            bin_meta = logic.get_bin_info(
-                chosen_cat
-            )
+            bin_meta = logic.get_bin_info(chosen_cat)
 
             st.markdown(f"""
             <div class="glass-bin-card" style="background:{bin_meta['bg_color']}; border:1.5px solid {bin_meta['badge_color']};">
-
-              <div style="font-size:2.6rem;">
-                {bin_meta['icon']}
-              </div>
-
+              <div style="font-size:2.6rem;">{bin_meta['icon']}</div>
               <div>
-
                 <div style="font-size:0.75rem; font-weight:900; color:{bin_meta['badge_color']}; text-transform:uppercase; letter-spacing:0.08em;">
-
-                  Required Municipal Stream
-                  ({bin_meta['bin_color']} Bin)
-
+                  Required Municipal Stream ({bin_meta['bin_color']} Bin)
                 </div>
-
                 <div style="font-size:1.25rem; font-weight:800; color:#FFFFFF; margin-top:2px;" class="brand-font">
-
                   {bin_meta['bin_name']}
-
                 </div>
-
               </div>
-
             </div>
             """, unsafe_allow_html=True)
 
@@ -684,7 +614,6 @@ if st.session_state.active_nav == "scan":
             )
 
         else:
-
             st.info(
                 "👉 Point camera at an item or select a demo preset "
                 "to see immediate AI detection & required bin."
@@ -717,20 +646,13 @@ if st.session_state.active_nav == "scan":
         )
 
         st.progress(
-            min(
-                current_user["points"] / 300,
-                1.0
-            ),
-            text=(
-                f"{current_user['points']} / 300 XP "
-                f"to Earth Champion"
-            )
+            min(current_user["points"] / 300, 1.0),
+            text=f"{current_user['points']} / 300 XP to Earth Champion"
         )
 
 # =============================================================================
 # SCREEN 2: ECO SHORTS (AESTHETIC RESPONSIVE VIDEO CARDS)
 # =============================================================================
-
 elif st.session_state.active_nav == "eco":
 
     col_reel, col_side = st.columns(
@@ -743,34 +665,15 @@ elif st.session_state.active_nav == "eco":
         # Card 1
         st.markdown("""
         <div style="background: linear-gradient(135deg, rgba(6, 95, 70, 0.75) 0%, rgba(4, 120, 87, 0.4) 100%); border: 1px solid rgba(0, 245, 160, 0.4); border-radius: 20px; padding: 22px; margin-bottom: 14px; box-shadow: 0 15px 35px rgba(0,0,0,0.4);">
-
-          <div style="background:rgba(0,245,160,0.2); color:#00F5A0; border:1px solid #00F5A0; border-radius:99px; padding:3px 12px; font-size:0.72rem; font-weight:800; display:inline-block; margin-bottom:8px; letter-spacing:0.05em;">
-            🌱 DIY UPCYCLING
-          </div>
-
-          <h3 style="margin:0 0 4px 0; color:#FFFFFF;" class="brand-font">
-            How 5 Plastic Bottles Become a Self-Watering Planter
-          </h3>
-
-          <p style="color:#A7F3D0; font-size:0.82rem; margin-bottom:0;">
-            @rewild.pune • 30s Civic Micro-Byte
-          </p>
-
+          <div style="background:rgba(0,245,160,0.2); color:#00F5A0; border:1px solid #00F5A0; border-radius:99px; padding:3px 12px; font-size:0.72rem; font-weight:800; display:inline-block; margin-bottom:8px; letter-spacing:0.05em;">🌱 DIY UPCYCLING</div>
+          <h3 style="margin:0 0 4px 0; color:#FFFFFF;" class="brand-font">How 5 Plastic Bottles Become a Self-Watering Planter</h3>
+          <p style="color:#A7F3D0; font-size:0.82rem; margin-bottom:0;">@rewild.pune • 30s Civic Micro-Byte</p>
         </div>
         """, unsafe_allow_html=True)
 
         components.html("""
         <div style="border-radius:16px; overflow:hidden; border:1px solid rgba(0,245,160,0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-
-          <iframe
-            width="100%"
-            height="320"
-            src="https://www.youtube-nocookie.com/embed/_6xlNyWPpB8"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-          </iframe>
-
+          <iframe width="100%" height="320" src="https://www.youtube-nocookie.com/embed/_6xlNyWPpB8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         """, height=335)
 
@@ -787,42 +690,21 @@ elif st.session_state.active_nav == "eco":
         # Card 2
         st.markdown("""
         <div style="background: linear-gradient(135deg, rgba(30, 58, 138, 0.75) 0%, rgba(29, 78, 216, 0.4) 100%); border: 1px solid rgba(0, 217, 245, 0.4); border-radius: 20px; padding: 22px; margin-bottom: 14px; box-shadow: 0 15px 35px rgba(0,0,0,0.4);">
-
-          <div style="background:rgba(0,217,245,0.2); color:#00D9F5; border:1px solid #00D9F5; border-radius:99px; padding:3px 12px; font-size:0.72rem; font-weight:800; display:inline-block; margin-bottom:8px; letter-spacing:0.05em;">
-            💡 CIRCULAR ECONOMY
-          </div>
-
-          <h3 style="margin:0 0 4px 0; color:#FFFFFF;" class="brand-font">
-            Why Aluminium Cans are 100% Infinitely Recyclable
-          </h3>
-
-          <p style="color:#BAE6FD; font-size:0.82rem; margin-bottom:0;">
-            @zerowaste.lab • Pune Civic Network
-          </p>
-
+          <div style="background:rgba(0,217,245,0.2); color:#00D9F5; border:1px solid #00D9F5; border-radius:99px; padding:3px 12px; font-size:0.72rem; font-weight:800; display:inline-block; margin-bottom:8px; letter-spacing:0.05em;">💡 CIRCULAR ECONOMY</div>
+          <h3 style="margin:0 0 4px 0; color:#FFFFFF;" class="brand-font">Why Aluminium Cans are 100% Infinitely Recyclable</h3>
+          <p style="color:#BAE6FD; font-size:0.82rem; margin-bottom:0;">@zerowaste.lab • Pune Civic Network</p>
         </div>
         """, unsafe_allow_html=True)
 
         components.html("""
         <div style="border-radius:16px; overflow:hidden; border:1px solid rgba(0,217,245,0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-
-          <iframe
-            width="100%"
-            height="320"
-            src="https://www.youtube-nocookie.com/embed/kYI4hA7s1pA"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-          </iframe>
-
+          <iframe width="100%" height="320" src="https://www.youtube-nocookie.com/embed/kYI4hA7s1pA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         """, height=335)
 
     with col_side:
 
-        st.markdown(
-            "### 🌿 Segregation Cheat-Sheet"
-        )
+        st.markdown("### 🌿 Segregation Cheat-Sheet")
 
         st.markdown("""
         * 🟢 **Green Bin**: Wet & Kitchen Food Waste
@@ -832,14 +714,13 @@ elif st.session_state.active_nav == "eco":
         """)
 
         st.info(
-            "💡 **Did you know?** Recycling one aluminum can "
-            "saves enough energy to power a TV for 3 hours!"
+            "💡 **Did you know?** Recycling one aluminum can saves "
+            "enough energy to power a TV for 3 hours!"
         )
 
 # =============================================================================
 # SCREEN 3: GIS COMMUNITY MAP
 # =============================================================================
-
 elif st.session_state.active_nav == "community":
 
     map_col, form_col = st.columns(
@@ -849,9 +730,7 @@ elif st.session_state.active_nav == "community":
 
     with map_col:
 
-        st.markdown(
-            "### 📍 Municipal GIS Hotspot Map"
-        )
+        st.markdown("### 📍 Municipal GIS Hotspot Map")
 
         pending_count = sum(
             1
@@ -878,15 +757,10 @@ elif st.session_state.active_nav == "community":
 
         for h in st.session_state.hotspots:
 
-            is_pending = (
-                h["status"] == "Pending"
-            )
+            is_pending = (h["status"] == "Pending")
 
             folium.Marker(
-                location=[
-                    h["lat"],
-                    h["lng"]
-                ],
+                location=[h["lat"], h["lng"]],
                 popup=(
                     f"<b>{h['location']}</b><br>"
                     f"{h['waste_type']}<br>"
@@ -898,9 +772,7 @@ elif st.session_state.active_nav == "community":
                     icon="trash" if is_pending else "ok-sign",
                     prefix="glyphicon"
                 )
-            ).add_to(
-                pune_dark_map
-            )
+            ).add_to(pune_dark_map)
 
         st_folium(
             pune_dark_map,
@@ -911,9 +783,7 @@ elif st.session_state.active_nav == "community":
 
     with form_col:
 
-        st.markdown(
-            "### 🚨 Post an Overflowing Spot"
-        )
+        st.markdown("### 🚨 Post an Overflowing Spot")
 
         with st.form(
             "post_hotspot_form",
@@ -981,9 +851,7 @@ elif st.session_state.active_nav == "community":
 
                 st.rerun()
 
-        st.markdown(
-            "### 🚚 Municipal Driver Action Queue"
-        )
+        st.markdown("### 🚚 Municipal Driver Action Queue")
 
         pending_hotspots = [
             h
@@ -1001,9 +869,7 @@ elif st.session_state.active_nav == "community":
 
             for h in pending_hotspots:
 
-                with st.expander(
-                    f"🔴 {h['location']}"
-                ):
+                with st.expander(f"🔴 {h['location']}"):
 
                     st.write(
                         f"**Type:** {h['waste_type']} • "
@@ -1027,7 +893,6 @@ elif st.session_state.active_nav == "community":
 # =============================================================================
 # SCREEN 4: SYSTEM OVERVIEW
 # =============================================================================
-
 elif st.session_state.active_nav == "home":
 
     m1, m2, m3 = st.columns(3)
