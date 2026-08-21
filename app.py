@@ -1,7 +1,7 @@
 # app.py
 """
 EcoNova: Smart Waste Management Ecosystem
-Smart City Dark Theme | AI Vision Guidance | Embed-Guaranteed Video Player | GIS Map
+Aesthetic Cyber-Eco Glassmorphism Theme | AI Computer Vision | GIS Operations | Micro-Learning Feed
 """
 
 import copy
@@ -12,106 +12,193 @@ from streamlit_folium import st_folium
 import logic
 import data
 
+# 1. Page Configuration
 st.set_page_config(
     page_title="EcoNova • Smart Waste Ecosystem",
-    page_icon="🌱",
+    page_icon="🌿",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 1. DARK CYBER THEME OVERRIDE
+# 2. AESTHETIC CYBER-ECO GLASSMORPHISM DESIGN SYSTEM
 # ─────────────────────────────────────────────────────────────────────────────
 st.markdown("""
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
 <style>
-/* Main Background & Fonts */
+/* Base Typography & Canvas */
+* {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+h1, h2, h3, .brand-font {
+    font-family: 'Space Grotesk', system-ui, sans-serif !important;
+    letter-spacing: -0.02em;
+}
+
+/* Deep Ambient Obsidian Background */
 html, body, .stApp, [data-testid="stAppViewContainer"], .main {
-    background-color: #070D18 !important;
+    background-color: #06090F !important;
     background-image: 
-        radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.18) 0%, transparent 40%),
-        radial-gradient(circle at 85% 85%, rgba(6, 182, 212, 0.15) 0%, transparent 45%),
-        linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px) !important;
-    background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px !important;
-    color: #F8FAFC !important;
+        radial-gradient(circle at 10% 10%, rgba(0, 245, 160, 0.15) 0%, transparent 45%),
+        radial-gradient(circle at 90% 20%, rgba(0, 217, 245, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 50% 90%, rgba(16, 185, 129, 0.10) 0%, transparent 50%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px) !important;
+    background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px !important;
+    background-attachment: fixed !important;
+    color: #F1F5F9 !important;
 }
 
-/* Sidebar Styling */
-[data-testid="stSidebar"], [data-testid="stSidebarContent"] {
-    background-color: #0B1120 !important;
-    border-right: 1px solid rgba(16, 185, 129, 0.25) !important;
+/* Frosted Glass Sidebar */
+[data-testid="stSidebar"] {
+    background: rgba(10, 15, 26, 0.85) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-right: 1px solid rgba(0, 245, 160, 0.18) !important;
+}
+[data-testid="stSidebarContent"] {
+    background: transparent !important;
 }
 
+/* Sidebar Navigation Buttons */
 [data-testid="stSidebar"] .stButton > button {
-    border-radius: 12px !important;
-    font-weight: 700 !important;
-    font-size: 0.90rem !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #94A3B8 !important;
+    border-radius: 14px !important;
+    font-weight: 600 !important;
+    font-size: 0.88rem !important;
     padding: 12px 18px !important;
     text-align: left !important;
     justify-content: flex-start !important;
-    margin-bottom: 6px !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Metrics Cards */
+[data-testid="stSidebar"] .stButton > button:hover {
+    background: rgba(0, 245, 160, 0.10) !important;
+    border-color: rgba(0, 245, 160, 0.4) !important;
+    color: #00F5A0 !important;
+    transform: translateX(4px);
+    box-shadow: 0 4px 15px rgba(0, 245, 160, 0.15);
+}
+
+[data-testid="stSidebar"] .stButton > button[kind="primary"] {
+    background: linear-gradient(135deg, rgba(0, 245, 160, 0.25) 0%, rgba(0, 217, 245, 0.25) 100%) !important;
+    border: 1px solid #00F5A0 !important;
+    color: #FFFFFF !important;
+    font-weight: 800 !important;
+    box-shadow: 0 0 20px rgba(0, 245, 160, 0.3) !important;
+}
+
+/* Glowing Holographic Metrics */
 [data-testid="stMetric"] {
-    background: rgba(15, 23, 42, 0.85) !important;
-    border: 1px solid rgba(16, 185, 129, 0.35) !important;
-    border-radius: 14px !important;
-    padding: 16px 20px !important;
+    background: rgba(13, 20, 36, 0.7) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    border: 1px solid rgba(0, 245, 160, 0.25) !important;
+    border-radius: 18px !important;
+    padding: 18px 22px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+[data-testid="stMetric"]:hover {
+    transform: translateY(-2px);
+    border-color: #00F5A0 !important;
+    box-shadow: 0 12px 35px rgba(0, 245, 160, 0.15);
 }
 [data-testid="stMetricValue"] {
-    color: #10B981 !important;
-    font-weight: 800 !important;
-    font-size: 1.65rem !important;
+    background: linear-gradient(135deg, #FFFFFF 30%, #00F5A0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900 !important;
+    font-size: 1.85rem !important;
+    font-family: 'Space Grotesk', sans-serif !important;
 }
 [data-testid="stMetricLabel"] {
     color: #94A3B8 !important;
     font-weight: 700 !important;
-    font-size: 0.75rem !important;
+    font-size: 0.72rem !important;
     text-transform: uppercase !important;
+    letter-spacing: 0.08em;
 }
 
-/* Glowing Primary Buttons */
+/* Vibrant Primary Cyber Buttons */
 .stButton > button[kind="primary"] {
-    background: linear-gradient(135deg, #059669 0%, #10B981 100%) !important;
-    color: #FFFFFF !important;
-    font-weight: 700 !important;
-    border-radius: 12px !important;
+    background: linear-gradient(135deg, #00F5A0 0%, #00D9F5 100%) !important;
+    color: #06090F !important;
+    font-weight: 800 !important;
+    font-size: 0.95rem !important;
+    border-radius: 14px !important;
     border: none !important;
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4) !important;
-    padding: 12px 24px !important;
+    box-shadow: 0 0 25px rgba(0, 245, 160, 0.5) !important;
+    padding: 14px 28px !important;
+    letter-spacing: 0.02em;
+    transition: all 0.25s ease !important;
+}
+.stButton > button[kind="primary"]:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 35px rgba(0, 217, 245, 0.7) !important;
 }
 
-/* Input Fields and Selectors */
-.stSelectbox > div > div, .stTextInput > div > div, .stTextArea > div > div, .stNumberInput > div > div {
-    background-color: #0F172A !important;
-    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+/* Glassmorphic Form Controls */
+.stSelectbox > div > div, 
+.stTextInput > div > div, 
+.stTextArea > div > div, 
+.stNumberInput > div > div {
+    background: rgba(13, 20, 36, 0.8) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
     color: #F8FAFC !important;
-    border-radius: 10px !important;
+    border-radius: 12px !important;
+}
+.stSelectbox > div > div:focus-within,
+.stTextInput > div > div:focus-within {
+    border-color: #00F5A0 !important;
+    box-shadow: 0 0 15px rgba(0, 245, 160, 0.3) !important;
 }
 
 .stRadio > div {
-    background: rgba(15, 23, 42, 0.75) !important;
-    border: 1px solid rgba(16, 185, 129, 0.25) !important;
-    border-radius: 10px !important;
-    padding: 8px 14px !important;
+    background: rgba(13, 20, 36, 0.65) !important;
+    border: 1px solid rgba(0, 245, 160, 0.2) !important;
+    border-radius: 14px !important;
+    padding: 10px 16px !important;
 }
 
 [data-testid="stExpander"] {
-    background: rgba(15, 23, 42, 0.85) !important;
-    border: 1px solid rgba(16, 185, 129, 0.3) !important;
-    border-radius: 12px !important;
+    background: rgba(13, 20, 36, 0.75) !important;
+    backdrop-filter: blur(14px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3) !important;
 }
 
-.bin-card {
-    border-radius: 14px;
-    padding: 16px 20px;
-    margin: 14px 0;
+/* Bin Indicator Card */
+.glass-bin-card {
+    border-radius: 18px;
+    padding: 20px 24px;
+    margin: 18px 0;
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 18px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
 }
 
+/* Video Containers */
+.video-card-wrap {
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 245, 160, 0.3);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    background: #000;
+}
+
+/* Global Text Colors */
 p, span, label, h1, h2, h3, h4, h5, h6, b, strong {
     color: #F8FAFC !important;
 }
@@ -124,7 +211,7 @@ p, span, label, h1, h2, h3, h4, h5, h6, b, strong {
 """, unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 2. STATE INITIALIZATION
+# 3. STATE INITIALIZATION
 # ─────────────────────────────────────────────────────────────────────────────
 if "citizens" not in st.session_state:
     st.session_state.citizens = copy.deepcopy(data.citizens)
@@ -140,29 +227,33 @@ if "detected_result" not in st.session_state:
 current_user = next((c for c in st.session_state.citizens if c["name"] == st.session_state.active_user_name), st.session_state.citizens[0])
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 3. SIDEBAR NAVIGATION & AUTHENTICATION
+# 4. SIDEBAR BRANDING & AUTHENTICATION
 # ─────────────────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("""
-    <div style="padding-bottom: 12px;">
-      <div style="font-size: 1.55rem; font-weight: 800; color: #10B981;">🌱 EcoNova</div>
-      <div style="font-size: 0.80rem; color: #94A3B8; font-weight: 500;">📍 Smart City Waste Network • Pune</div>
+    <div style="padding: 10px 4px 16px 4px;">
+      <div style="font-size: 1.7rem; font-weight: 900; background: linear-gradient(135deg, #00F5A0 0%, #00D9F5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" class="brand-font">
+        🌿 EcoNova
+      </div>
+      <div style="font-size: 0.78rem; color: #64748B; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 2px;">
+        Smart City Clean Grid • Pune
+      </div>
     </div>
     """, unsafe_allow_html=True)
 
     st.markdown("""
-    <div style="display:flex; gap:8px; margin-bottom: 20px; flex-wrap: wrap;">
-      <span style="background:rgba(16,185,129,0.15); color:#10B981; border:1px solid #10B981; border-radius:99px; padding:3px 12px; font-size:0.72rem; font-weight:700;">🟢 Grid Active</span>
-      <span style="background:rgba(245,158,11,0.15); color:#F59E0B; border:1px solid #F59E0B; border-radius:99px; padding:3px 12px; font-size:0.72rem; font-weight:700;">🔥 4-Day Streak</span>
+    <div style="display:flex; gap:8px; margin-bottom: 24px; flex-wrap: wrap;">
+      <span style="background:rgba(0,245,160,0.12); color:#00F5A0; border:1px solid rgba(0,245,160,0.4); border-radius:99px; padding:4px 12px; font-size:0.70rem; font-weight:800; letter-spacing:0.04em;">● LIVE GRID</span>
+      <span style="background:rgba(245,158,11,0.12); color:#FBBF24; border:1px solid rgba(245,158,11,0.4); border-radius:99px; padding:4px 12px; font-size:0.70rem; font-weight:800;">🔥 4-DAY STREAK</span>
     </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("<p style='font-size:0.70rem; font-weight:700; color:#64748B; text-transform:uppercase;'>Navigation</p>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size:0.70rem; font-weight:800; color:#475569; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:8px;'>Navigation</p>", unsafe_allow_html=True)
 
     nav_items = [
         ("📸 Scan Waste (AI Vision)", "scan"),
         ("🎬 Eco Shorts Feed", "eco"),
-        ("📍 Community & Driver GIS Map", "community"),
+        ("📍 Municipal Hotspots & GIS Map", "community"),
         ("🏠 System Overview", "home"),
     ]
 
@@ -174,21 +265,21 @@ with st.sidebar:
 
     st.divider()
 
-    st.markdown("<p style='font-size:0.70rem; font-weight:700; color:#64748B; text-transform:uppercase;'>🔐 Citizen Authentication</p>", unsafe_allow_html=True)
-    with st.expander("👤 Switch Account / Sign In", expanded=False):
+    st.markdown("<p style='font-size:0.70rem; font-weight:800; color:#475569; text-transform:uppercase; letter-spacing:0.1em;'>Citizen Profile</p>", unsafe_allow_html=True)
+    with st.expander("👤 Switch Account / Register", expanded=False):
         user_names = [c["name"] for c in st.session_state.citizens]
         curr_idx = user_names.index(st.session_state.active_user_name) if st.session_state.active_user_name in user_names else 0
-        switch_acc = st.selectbox("Select Existing Citizen", user_names, index=curr_idx)
+        switch_acc = st.selectbox("Select Account", user_names, index=curr_idx)
         if switch_acc != st.session_state.active_user_name:
             st.session_state.active_user_name = switch_acc
             st.session_state.detected_result = None
             st.rerun()
 
         st.markdown("---")
-        st.markdown("**Register New Household:**")
-        new_name = st.text_input("Full Name", placeholder="e.g. Priya Deshmukh")
-        new_neigh = st.text_input("Society / Area", placeholder="e.g. Baner, Sector 2")
-        if st.button("➕ Create & Login", use_container_width=True):
+        st.markdown("<p style='font-size:0.80rem; font-weight:700;'>Register Household:</p>", unsafe_allow_html=True)
+        new_name = st.text_input("Citizen Name", placeholder="e.g. Priya Deshmukh")
+        new_neigh = st.text_input("Society / Sector", placeholder="e.g. Baner, Sector 2")
+        if st.button("➕ Register & Sign In", use_container_width=True):
             if new_name.strip():
                 new_profile = {
                     "id": f"c{len(st.session_state.citizens)+1}",
@@ -201,53 +292,53 @@ with st.sidebar:
                 }
                 st.session_state.citizens.append(new_profile)
                 st.session_state.active_user_name = new_name.strip()
-                st.toast(f"Welcome {new_name}! Logged in.", icon="🌱")
+                st.toast(f"Welcome {new_name}! Logged in.", icon="🌿")
                 st.rerun()
 
-    st.metric("EcoPoints", f"{current_user['points']} XP")
-    st.metric("Lifetime CO₂ Saved", f"{current_user['co2_total']:.1f} kg")
-    st.caption(f"🎖️ Habit Rank: **{current_user['badge']}**")
+    st.metric("EcoPoints Earned", f"{current_user['points']} XP")
+    st.metric("Lifetime CO₂ Diverted", f"{current_user['co2_total']:.1f} kg")
+    st.caption(f"🎖️ Status: **{current_user['badge']}**")
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 4. HEADER BAR
+# 5. HEADER BAR
 # ─────────────────────────────────────────────────────────────────────────────
 headers = {
-    "scan": "📸 AI Waste Scanner & Real-Time Carbon Offset",
-    "eco": "🎬 Eco Shorts: Civic Awareness Feed",
+    "scan": "📸 AI Waste Scanner & Carbon Impact Matrix",
+    "eco": "🎬 Eco Shorts: Civic Micro-Learning Feed",
     "community": "📍 Municipal Hotspots & Driver Dispatch GIS",
     "home": "🏠 EcoNova Smart City Overview"
 }
 
 st.markdown(f"""
-<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px;">
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 28px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 18px;">
   <div>
-    <h2 style="margin:0; font-weight:800; color:#F8FAFC; font-size:1.65rem;">{headers.get(st.session_state.active_nav, 'EcoNova')}</h2>
-    <span style="color:#94A3B8; font-size:0.85rem;">Active Citizen: <b>{current_user['name']}</b> ({current_user['neighborhood']})</span>
+    <h2 style="margin:0; font-weight:800; font-size:1.65rem; color:#F8FAFC;" class="brand-font">{headers.get(st.session_state.active_nav, 'EcoNova')}</h2>
+    <span style="color:#64748B; font-size:0.85rem; font-weight:500;">Authenticated Citizen: <b style="color:#00F5A0;">{current_user['name']}</b> ({current_user['neighborhood']})</span>
   </div>
   <div>
-    <span style="background:rgba(16,185,129,0.2); color:#10B981; border:1px solid #10B981; font-weight:700; padding:6px 16px; border-radius:99px; font-size:0.85rem;">⚡ {current_user['points']} XP</span>
+    <span style="background:linear-gradient(135deg, rgba(0,245,160,0.15) 0%, rgba(0,217,245,0.15) 100%); color:#00F5A0; border:1px solid #00F5A0; font-weight:800; padding:8px 20px; border-radius:99px; font-size:0.88rem; box-shadow:0 0 15px rgba(0,245,160,0.2);">⚡ {current_user['points']} XP</span>
   </div>
 </div>
 """, unsafe_allow_html=True)
 
 
 # =============================================================================
-# SCREEN 1: SCAN WASTE (AI VISION & BIN GUIDANCE)
+# SCREEN 1: SCAN WASTE (AI VISION & CARBON MATRIX)
 # =============================================================================
 if st.session_state.active_nav == "scan":
     c_left, c_right = st.columns([1, 1], gap="large")
 
     with c_left:
-        st.markdown("### 📸 Point Camera or Upload Photo")
-        mode = st.radio("Capture Mode:", ["Live Webcam Snap", "Upload Photo File", "Quick Demo Presets"], horizontal=True)
+        st.markdown("### 📸 Point Camera or Select Demo")
+        mode = st.radio("Capture Stream:", ["Live Webcam Snap", "Upload Photo File", "Quick Demo Presets"], horizontal=True)
 
         img_data = None
         if mode == "Live Webcam Snap":
-            cam = st.camera_input("Point camera at your item (Center the object)")
+            cam = st.camera_input("Center the waste object inside the frame")
             if cam:
                 img_data = cam.getvalue()
         elif mode == "Upload Photo File":
-            up = st.file_uploader("Upload waste image", type=["png", "jpg", "jpeg"])
+            up = st.file_uploader("Upload waste snapshot", type=["png", "jpg", "jpeg"])
             if up:
                 img_data = up.getvalue()
                 st.image(up, use_container_width=True)
@@ -273,103 +364,110 @@ if st.session_state.active_nav == "scan":
         if img_data:
             st.session_state.detected_result = logic.analyze_waste_image(img_data)
 
-        st.markdown("#### 🏷️ Classification Confirmation")
+        st.markdown("#### 🏷️ Classification Verification")
         cat_options = ["E-Waste", "Metal", "Plastic", "Paper", "Organic", "Glass", "Textiles", "Hazardous"]
         detected_cat = st.session_state.detected_result["category"] if st.session_state.detected_result else "E-Waste"
-        chosen_cat = st.selectbox("Category Override (if needed):", cat_options, index=cat_options.index(detected_cat) if detected_cat in cat_options else 0)
+        chosen_cat = st.selectbox("Confirm / Override Category:", cat_options, index=cat_options.index(detected_cat) if detected_cat in cat_options else 0)
 
         auto_w = logic.DEFAULT_CATEGORY_WEIGHTS.get(chosen_cat, 0.25)
-        st.caption(f"⚖️ **Auto-Estimated Weight:** `{auto_w} kg` (Standard municipal average)")
+        st.caption(f"⚖️ **Auto-Calibrated Weight:** `{auto_w} kg` (Standard municipal average)")
 
-        if st.button("🌱 Log Clean Segregation (+10 XP)", type="primary", use_container_width=True):
+        if st.button("🌿 Log Clean Segregation (+10 XP)", type="primary", use_container_width=True):
             impact = logic.calculate_carbon_impact(chosen_cat, auto_w)
             logic.update_citizen_score(current_user, is_correct=True)
             current_user["co2_total"] += impact["co2_saved_kg"]
             st.balloons()
-            st.toast(f"Logged {chosen_cat}! +10 XP & {impact['co2_saved_kg']} kg CO₂ saved!", icon="🔥")
+            st.toast(f"Logged {chosen_cat}! +10 XP & {impact['co2_saved_kg']} kg CO₂ diverted!", icon="🔥")
             st.rerun()
 
     with c_right:
-        st.markdown("### 🌍 Real-Time AI Detection & Bin Segregation")
+        st.markdown("### 🌍 Real-Time AI Detection & Bin Routing")
         if st.session_state.detected_result:
             res = st.session_state.detected_result
-            st.success(f"✅ **AI Detection:** {res['label']} ({res['confidence']}% Confidence)")
+            st.markdown(f"""
+            <div style="background:rgba(0,245,160,0.08); border:1px solid rgba(0,245,160,0.3); border-radius:14px; padding:14px 18px; margin-bottom:14px;">
+              <span style="color:#00F5A0; font-weight:800;">✅ AI CLASSIFICATION:</span> <span style="font-weight:700;">{res['label']}</span> 
+              <span style="background:rgba(0,245,160,0.2); color:#00F5A0; padding:2px 8px; border-radius:99px; font-size:0.75rem; font-weight:800; margin-left:8px;">{res['confidence']}% MATCH</span>
+            </div>
+            """, unsafe_allow_html=True)
             
             bin_meta = logic.get_bin_info(chosen_cat)
             st.markdown(f"""
-            <div class="bin-card" style="background:{bin_meta['bg_color']}; border:1.5px solid {bin_meta['badge_color']};">
-              <div style="font-size:2.2rem;">{bin_meta['icon']}</div>
+            <div class="glass-bin-card" style="background:{bin_meta['bg_color']}; border:1.5px solid {bin_meta['badge_color']};">
+              <div style="font-size:2.6rem;">{bin_meta['icon']}</div>
               <div>
-                <div style="font-size:0.75rem; font-weight:800; color:{bin_meta['badge_color']}; text-transform:uppercase; letter-spacing:0.06em;">
-                  Required Disposal Bin ({bin_meta['bin_color']} Bin)
+                <div style="font-size:0.75rem; font-weight:900; color:{bin_meta['badge_color']}; text-transform:uppercase; letter-spacing:0.08em;">
+                  Required Municipal Stream ({bin_meta['bin_color']} Bin)
                 </div>
-                <div style="font-size:1.1rem; font-weight:800; color:#FFFFFF; margin-top:2px;">
+                <div style="font-size:1.25rem; font-weight:800; color:#FFFFFF; margin-top:2px;" class="brand-font">
                   {bin_meta['bin_name']}
                 </div>
               </div>
             </div>
             """, unsafe_allow_html=True)
             
-            st.info(f"💡 **Disposal Tip:** {logic.SORTING_TIPS.get(chosen_cat, 'Segregate cleanly.')}")
+            st.info(f"💡 **Sorting Tip:** {logic.SORTING_TIPS.get(chosen_cat, 'Ensure item is clean and dry.')}")
         else:
-            st.info("👉 Hold an item in front of your camera or pick a preset to see immediate AI detection & required bin.")
+            st.info("👉 Point camera at an item or select a demo preset to see immediate AI detection & required bin.")
 
         live_math = logic.calculate_carbon_impact(chosen_cat, auto_w)
         m1, m2, m3 = st.columns(3)
-        m1.metric("CO₂e Avoided", f"{live_math['co2_saved_kg']} kg")
+        m1.metric("CO₂e Diverted", f"{live_math['co2_saved_kg']} kg")
         m2.metric("Driving Offset", f"{live_math['km_offset']} km")
-        m3.metric("Tree Absorption", f"{live_math['tree_days']} d")
+        m3.metric("Tree Equiv.", f"{live_math['tree_days']} d")
 
         st.markdown(f"**Habit Tier:** {current_user['badge']}")
         st.progress(min(current_user["points"] / 300, 1.0), text=f"{current_user['points']} / 300 XP to Earth Champion")
 
 
 # =============================================================================
-# SCREEN 2: ECO SHORTS (100% UNRESTRICTED YOUTUBE-NOCOOKIE PLAYER)
+# SCREEN 2: ECO SHORTS (AESTHETIC RESPONSIVE VIDEO CARDS)
 # =============================================================================
 elif st.session_state.active_nav == "eco":
     col_reel, col_side = st.columns([1.3, 0.7], gap="large")
 
     with col_reel:
+        # Card 1
         st.markdown("""
-        <div style="background: linear-gradient(135deg, rgba(6, 95, 70, 0.8) 0%, rgba(4, 120, 87, 0.6) 100%); border: 1px solid rgba(16, 185, 129, 0.5); border-radius: 20px; padding: 20px; margin-bottom: 16px;">
-          <div style="background:rgba(16,185,129,0.25); color:#34D399; border:1px solid #10B981; border-radius:99px; padding:3px 12px; font-size:0.75rem; font-weight:700; display:inline-block; margin-bottom:8px;">🌱 DIY Reuse</div>
-          <h3 style="margin:0 0 4px 0; color:#FFFFFF;">How Plastic Bottles are Recycled into New Resources</h3>
-          <p style="color:#A7F3D0; font-size:0.85rem; margin-bottom:0px;">@nationalgeographic • Global Green Initiative</p>
+        <div style="background: linear-gradient(135deg, rgba(6, 95, 70, 0.75) 0%, rgba(4, 120, 87, 0.4) 100%); border: 1px solid rgba(0, 245, 160, 0.4); border-radius: 20px; padding: 22px; margin-bottom: 14px; box-shadow: 0 15px 35px rgba(0,0,0,0.4);">
+          <div style="background:rgba(0,245,160,0.2); color:#00F5A0; border:1px solid #00F5A0; border-radius:99px; padding:3px 12px; font-size:0.72rem; font-weight:800; display:inline-block; margin-bottom:8px; letter-spacing:0.05em;">🌱 DIY UPCYCLING</div>
+          <h3 style="margin:0 0 4px 0; color:#FFFFFF;" class="brand-font">How 5 Plastic Bottles Become a Self-Watering Planter</h3>
+          <p style="color:#A7F3D0; font-size:0.82rem; margin-bottom:0;">@rewild.pune • 30s Civic Micro-Byte</p>
         </div>
         """, unsafe_allow_html=True)
         
-        # Guaranteed unrestricted embed
         components.html("""
-        <iframe width="100%" height="320" src="https://www.youtube-nocookie.com/embed/_6xlNyWPpB8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius:14px; border:1px solid rgba(16,185,129,0.4);"></iframe>
-        """, height=330)
+        <div style="border-radius:16px; overflow:hidden; border:1px solid rgba(0,245,160,0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+          <iframe width="100%" height="320" src="https://www.youtube-nocookie.com/embed/_6xlNyWPpB8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        """, height=335)
 
-        st.markdown("<div style='display:flex; gap:24px; margin-top:8px; color:#94A3B8; font-weight:600;'><span>❤️ 1,240</span><span>💬 86</span><span>↗️ Share</span><span>🔖 Save</span></div>", unsafe_allow_html=True)
+        st.markdown("<div style='display:flex; gap:24px; margin-top:8px; margin-bottom:28px; color:#94A3B8; font-weight:600;'><span>❤️ 1,240</span><span>💬 86</span><span>↗️ Share</span><span>🔖 Save</span></div>", unsafe_allow_html=True)
 
-        st.divider()
-
+        # Card 2
         st.markdown("""
-        <div style="background: linear-gradient(135deg, rgba(30, 64, 175, 0.8) 0%, rgba(29, 78, 216, 0.6) 100%); border: 1px solid rgba(59, 130, 246, 0.5); border-radius: 20px; padding: 20px; margin-bottom: 16px;">
-          <div style="background:rgba(59, 130, 246, 0.25); color:#93C5FD; border:1px solid #3B82F6; border-radius:99px; padding:3px 12px; font-size:0.75rem; font-weight:700; display:inline-block; margin-bottom:8px;">💡 Waste Facts</div>
-          <h3 style="margin:0 0 4px 0; color:#FFFFFF;">How Aluminium Cans are 100% Infinitely Recycled</h3>
-          <p style="color:#BFDBFE; font-size:0.85rem; margin-bottom:0px;">@sciencechannel • Engineering Marvels</p>
+        <div style="background: linear-gradient(135deg, rgba(30, 58, 138, 0.75) 0%, rgba(29, 78, 216, 0.4) 100%); border: 1px solid rgba(0, 217, 245, 0.4); border-radius: 20px; padding: 22px; margin-bottom: 14px; box-shadow: 0 15px 35px rgba(0,0,0,0.4);">
+          <div style="background:rgba(0,217,245,0.2); color:#00D9F5; border:1px solid #00D9F5; border-radius:99px; padding:3px 12px; font-size:0.72rem; font-weight:800; display:inline-block; margin-bottom:8px; letter-spacing:0.05em;">💡 CIRCULAR ECONOMY</div>
+          <h3 style="margin:0 0 4px 0; color:#FFFFFF;" class="brand-font">Why Aluminium Cans are 100% Infinitely Recyclable</h3>
+          <p style="color:#BAE6FD; font-size:0.82rem; margin-bottom:0;">@zerowaste.lab • Pune Civic Network</p>
         </div>
         """, unsafe_allow_html=True)
         
-        # Guaranteed unrestricted embed
         components.html("""
-        <iframe width="100%" height="320" src="https://www.youtube-nocookie.com/embed/kYI4hA7s1pA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius:14px; border:1px solid rgba(59,130,246,0.4);"></iframe>
-        """, height=330)
+        <div style="border-radius:16px; overflow:hidden; border:1px solid rgba(0,217,245,0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+          <iframe width="100%" height="320" src="https://www.youtube-nocookie.com/embed/kYI4hA7s1pA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        """, height=335)
 
     with col_side:
-        st.markdown("### 🌿 Segregation Golden Rules")
+        st.markdown("### 🌿 Segregation Cheat-Sheet")
         st.markdown("""
         * 🟢 **Green Bin**: Wet & Kitchen Food Waste
         * 🔵 **Blue Bin**: Dry Recyclables (Plastic, Paper, Metal, Glass)
         * ⚫ **Black Bin**: E-Waste Drop-off (Gadgets & Cables)
         * 🔴 **Red Bin**: Hazardous & Sanitary Items
         """)
-        st.info("💡 **Did you know?** Recycling one aluminum can saves enough energy to run a TV for 3 hours!")
+        st.info("💡 **Did you know?** Recycling one aluminum can saves enough energy to power a TV for 3 hours!")
 
 
 # =============================================================================
