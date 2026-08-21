@@ -1,6 +1,7 @@
 # app.py
 """
 EcoNova: Smart Waste Management Ecosystem
+Futuristic Smart City Dark Theme | AI Vision & Municipal Bin Color Guidance | Video Feeds | GIS Map
 """
 
 import copy
@@ -18,7 +19,7 @@ st.set_page_config(
 )
 
 # ─────────────────────────────────────────────────────────────────────────────
-# STYLING
+# 1. SMART CITY DARK CYBER-ECO THEME (GLOBAL CSS OVERRIDE)
 # ─────────────────────────────────────────────────────────────────────────────
 st.markdown("""
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,6 +27,114 @@ st.markdown("""
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+/* Streamlit Theme Root Overrides */
+:root {
+    --background-color: #060B14 !important;
+    --secondary-background-color: #0B1120 !important;
+    --text-color: #F8FAFC !important;
+}
+
+/* Force Deep Cyber Grid Background */
+html, body, .stApp, 
+[data-testid="stAppViewContainer"], 
+[data-testid="stAppViewBlockContainer"],
+[data-testid="stHeader"],
+.main, section.main, .block-container,
+div[class*="st-emotion-cache"],
+div[class*="css-"] {
+    background-color: #060B14 !important;
+    background-image: 
+        radial-gradient(circle at 10% 15%, rgba(16, 185, 129, 0.25) 0%, transparent 40%),
+        radial-gradient(circle at 90% 85%, rgba(6, 182, 212, 0.20) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.85) 0%, transparent 70%),
+        linear-gradient(rgba(16, 185, 129, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16, 185, 129, 0.06) 1px, transparent 1px) !important;
+    background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px !important;
+    background-attachment: fixed !important;
+    color: #F8FAFC !important;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+}
+
+/* Sidebar Dark Theme */
+[data-testid="stSidebar"], 
+[data-testid="stSidebarContent"],
+[data-testid="stSidebarUserContent"],
+[data-testid="stSidebar"] div[class*="st-emotion-cache"] {
+    background-color: #0B1120 !important;
+    border-right: 1px solid rgba(16, 185, 129, 0.25) !important;
+}
+
+[data-testid="stSidebar"] .stButton > button {
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    font-size: 0.90rem !important;
+    padding: 12px 18px !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+    margin-bottom: 6px !important;
+}
+
+/* Glassmorphism Metric Cards */
+[data-testid="stMetric"] {
+    background: rgba(15, 23, 42, 0.85) !important;
+    border: 1px solid rgba(16, 185, 129, 0.35) !important;
+    border-radius: 14px !important;
+    padding: 16px 20px !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important;
+}
+[data-testid="stMetricValue"] {
+    color: #10B981 !important;
+    font-weight: 800 !important;
+    font-size: 1.65rem !important;
+}
+[data-testid="stMetricLabel"] {
+    color: #94A3B8 !important;
+    font-weight: 700 !important;
+    font-size: 0.72rem !important;
+    text-transform: uppercase !important;
+}
+
+/* Glowing Action Buttons */
+.stButton > button[kind="primary"] {
+    background: linear-gradient(135deg, #059669 0%, #10B981 100%) !important;
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
+    border-radius: 12px !important;
+    border: none !important;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.45) !important;
+    padding: 12px 24px !important;
+}
+.stButton > button[kind="secondary"] {
+    background: rgba(30, 41, 59, 0.7) !important;
+    color: #F8FAFC !important;
+    border: 1px solid rgba(255,255,255,0.15) !important;
+    border-radius: 12px !important;
+}
+
+/* Inputs, Selectboxes, Radios, Expanders */
+.stSelectbox > div > div,
+.stTextInput > div > div,
+.stTextArea > div > div,
+.stNumberInput > div > div {
+    background-color: #0F172A !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+    color: #F8FAFC !important;
+    border-radius: 10px !important;
+}
+
+.stRadio > div {
+    background: rgba(15, 23, 42, 0.75) !important;
+    border: 1px solid rgba(16, 185, 129, 0.25) !important;
+    border-radius: 10px !important;
+    padding: 8px 14px !important;
+}
+
+[data-testid="stExpander"] {
+    background: rgba(15, 23, 42, 0.85) !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+    border-radius: 12px !important;
+}
+
 .bin-card {
     border-radius: 14px;
     padding: 16px 20px;
@@ -33,14 +142,21 @@ st.markdown("""
     display: flex;
     align-items: center;
     gap: 14px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 
-[data-testid="stSidebar"] .stButton > button {
-    border-radius: 10px;
-    font-weight: 600;
-    text-align: left;
-    justify-content: flex-start;
-    margin-bottom: 4px;
+[data-testid="stVideo"] {
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(16, 185, 129, 0.35) !important;
+}
+
+/* Text High-Contrast Rules */
+p, span, label, h1, h2, h3, h4, h5, h6, b, strong {
+    color: #F8FAFC !important;
+}
+.stMarkdown p, .stCaption p {
+    color: #94A3B8 !important;
 }
 
 #MainMenu, footer, [data-testid="stToolbar"] { visibility: hidden; }
@@ -48,7 +164,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────────────────────────────────────
-# STATE INITIALIZATION
+# 2. STATE INITIALIZATION
 # ─────────────────────────────────────────────────────────────────────────────
 if "citizens" not in st.session_state:
     st.session_state.citizens = copy.deepcopy(data.citizens)
@@ -64,24 +180,24 @@ if "detected_result" not in st.session_state:
 current_user = next((c for c in st.session_state.citizens if c["name"] == st.session_state.active_user_name), st.session_state.citizens[0])
 
 # ─────────────────────────────────────────────────────────────────────────────
-# SIDEBAR
+# 3. SIDEBAR NAVIGATION
 # ─────────────────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("""
-    <div style="padding-bottom: 10px;">
-      <div style="font-size: 1.5rem; font-weight: 800; color: #10B981;">🌱 EcoNova</div>
-      <div style="font-size: 0.82rem; color: #64748B;">Smart City Waste Network • Pune</div>
+    <div style="padding-bottom: 12px;">
+      <div style="font-size: 1.55rem; font-weight: 800; color: #10B981;">🌱 EcoNova</div>
+      <div style="font-size: 0.80rem; color: #94A3B8; font-weight: 500;">📍 Smart City Waste Network • Pune</div>
     </div>
     """, unsafe_allow_html=True)
 
     st.markdown("""
-    <div style="display:flex; gap:8px; margin-bottom: 16px;">
-      <span style="background:rgba(16,185,129,0.15); color:#059669; border-radius:99px; padding:3px 10px; font-size:0.75rem; font-weight:700;">🟢 Grid Active</span>
-      <span style="background:rgba(245,158,11,0.15); color:#D97706; border-radius:99px; padding:3px 10px; font-size:0.75rem; font-weight:700;">🔥 4-Day Streak</span>
+    <div style="display:flex; gap:8px; margin-bottom: 20px; flex-wrap: wrap;">
+      <span style="background:rgba(16,185,129,0.15); color:#10B981; border:1px solid #10B981; border-radius:99px; padding:3px 12px; font-size:0.72rem; font-weight:700;">🟢 Grid Active</span>
+      <span style="background:rgba(245,158,11,0.15); color:#F59E0B; border:1px solid #F59E0B; border-radius:99px; padding:3px 12px; font-size:0.72rem; font-weight:700;">🔥 4-Day Streak</span>
     </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("<p style='font-size:0.72rem; font-weight:700; color:#94A3B8; text-transform:uppercase;'>Navigation</p>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size:0.70rem; font-weight:700; color:#64748B; text-transform:uppercase;'>Navigation</p>", unsafe_allow_html=True)
 
     nav_items = [
         ("📸 Scan Waste (AI Vision)", "scan"),
@@ -98,7 +214,7 @@ with st.sidebar:
 
     st.divider()
 
-    st.markdown("<p style='font-size:0.72rem; font-weight:700; color:#94A3B8; text-transform:uppercase;'>Citizen Authentication</p>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size:0.70rem; font-weight:700; color:#64748B; text-transform:uppercase;'>🔐 Citizen Authentication</p>", unsafe_allow_html=True)
     with st.expander("👤 Switch Account / Sign In", expanded=False):
         user_names = [c["name"] for c in st.session_state.citizens]
         curr_idx = user_names.index(st.session_state.active_user_name) if st.session_state.active_user_name in user_names else 0
@@ -133,7 +249,7 @@ with st.sidebar:
     st.caption(f"🎖️ Habit Rank: **{current_user['badge']}**")
 
 # ─────────────────────────────────────────────────────────────────────────────
-# HEADER BAR
+# 4. HEADER BAR
 # ─────────────────────────────────────────────────────────────────────────────
 headers = {
     "scan": "📸 AI Waste Scanner & Real-Time Carbon Offset",
@@ -143,13 +259,13 @@ headers = {
 }
 
 st.markdown(f"""
-<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px; border-bottom: 1px solid #E2E8F0; padding-bottom: 12px;">
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px;">
   <div>
-    <h2 style="margin:0; font-weight:800; font-size:1.5rem;">{headers.get(st.session_state.active_nav, 'EcoNova')}</h2>
-    <span style="color:#64748B; font-size:0.85rem;">Active Citizen: <b>{current_user['name']}</b> ({current_user['neighborhood']})</span>
+    <h2 style="margin:0; font-weight:800; color:#F8FAFC; font-size:1.65rem;">{headers.get(st.session_state.active_nav, 'EcoNova')}</h2>
+    <span style="color:#94A3B8; font-size:0.85rem;">Active Citizen: <b>{current_user['name']}</b> ({current_user['neighborhood']})</span>
   </div>
   <div>
-    <span style="background:#ECFDF5; color:#059669; border:1px solid #A7F3D0; font-weight:700; padding:6px 14px; border-radius:99px; font-size:0.85rem;">⚡ {current_user['points']} XP</span>
+    <span style="background:rgba(16,185,129,0.2); color:#10B981; border:1px solid #10B981; font-weight:700; padding:6px 16px; border-radius:99px; font-size:0.85rem;">⚡ {current_user['points']} XP</span>
   </div>
 </div>
 """, unsafe_allow_html=True)
@@ -227,7 +343,7 @@ if st.session_state.active_nav == "scan":
                 <div style="font-size:0.75rem; font-weight:800; color:{bin_meta['badge_color']}; text-transform:uppercase; letter-spacing:0.06em;">
                   Required Disposal Bin ({bin_meta['bin_color']} Bin)
                 </div>
-                <div style="font-size:1.1rem; font-weight:800; color:#1E293B; margin-top:2px;">
+                <div style="font-size:1.1rem; font-weight:800; color:#FFFFFF; margin-top:2px;">
                   {bin_meta['bin_name']}
                 </div>
               </div>
@@ -249,30 +365,29 @@ if st.session_state.active_nav == "scan":
 
 
 # =============================================================================
-# SCREEN 2: ECO SHORTS (OPEN ACCESS VIDEO FEEDS)
+# SCREEN 2: ECO SHORTS (WORKING DIRECT VIDEO FEEDS)
 # =============================================================================
 elif st.session_state.active_nav == "eco":
     col_reel, col_side = st.columns([1.3, 0.7], gap="large")
 
     with col_reel:
         st.markdown("""
-        <div style="border: 1px solid #E2E8F0; border-radius: 16px; padding: 18px; margin-bottom: 16px; background:#F8FAFC;">
-          <span style="background:#ECFDF5; color:#059669; border:1px solid #A7F3D0; border-radius:99px; padding:2px 10px; font-size:0.75rem; font-weight:700;">🌱 DIY Reuse</span>
-          <h3 style="margin:8px 0 4px 0; color:#0F172A;">How 5 Plastic Bottles Become a Self-Watering Planter</h3>
-          <p style="color:#64748B; font-size:0.85rem; margin-bottom:12px;">@rewild.pune • 30s Green Byte</p>
+        <div style="background: linear-gradient(135deg, rgba(6, 95, 70, 0.7) 0%, rgba(4, 120, 87, 0.5) 100%); border: 1px solid rgba(16, 185, 129, 0.5); border-radius: 20px; padding: 22px; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+          <div style="background:rgba(16,185,129,0.25); color:#34D399; border:1px solid #10B981; border-radius:99px; padding:3px 12px; font-size:0.75rem; font-weight:700; display:inline-block; margin-bottom:10px;">🌱 DIY Reuse</div>
+          <h3 style="margin:0 0 6px 0; color:#FFFFFF;">How 5 Plastic Bottles Become a Self-Watering Planter</h3>
+          <p style="color:#A7F3D0; font-size:0.85rem; margin-bottom:14px;">@rewild.pune • 30s Green Byte</p>
         </div>
         """, unsafe_allow_html=True)
-        # Direct reliable WebM/MP4 stream that works in all browsers without embed blocks
         st.video("https://media.w3.org/2010/05/sintel/trailer.mp4")
-        st.markdown("<div style='display:flex; gap:20px; margin-top:8px; color:#64748B; font-weight:600;'><span>❤️ 1,240</span><span>💬 86</span><span>↗️ Share</span><span>🔖 Save</span></div>", unsafe_allow_html=True)
+        st.markdown("<div style='display:flex; gap:24px; margin-top:8px; color:#94A3B8; font-weight:600;'><span>❤️ 1,240</span><span>💬 86</span><span>↗️ Share</span><span>🔖 Save</span></div>", unsafe_allow_html=True)
 
         st.divider()
 
         st.markdown("""
-        <div style="border: 1px solid #E2E8F0; border-radius: 16px; padding: 18px; margin-bottom: 16px; background:#F8FAFC;">
-          <span style="background:#EFF6FF; color:#2563EB; border:1px solid #BFDBFE; border-radius:99px; padding:2px 10px; font-size:0.75rem; font-weight:700;">💡 Waste Facts</span>
-          <h3 style="margin:8px 0 4px 0; color:#0F172A;">Why Aluminium Cans are 100% Infinitely Recyclable</h3>
-          <p style="color:#64748B; font-size:0.85rem; margin-bottom:12px;">@zerowaste.lab • Pune Civic Initiative</p>
+        <div style="background: linear-gradient(135deg, rgba(30, 64, 175, 0.7) 0%, rgba(29, 78, 216, 0.5) 100%); border: 1px solid rgba(59, 130, 246, 0.5); border-radius: 20px; padding: 22px; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+          <div style="background:rgba(59, 130, 246, 0.25); color:#93C5FD; border:1px solid #3B82F6; border-radius:99px; padding:3px 12px; font-size:0.75rem; font-weight:700; display:inline-block; margin-bottom:10px;">💡 Waste Facts</div>
+          <h3 style="margin:0 0 6px 0; color:#FFFFFF;">Why Aluminium Cans are 100% Infinitely Recyclable</h3>
+          <p style="color:#BFDBFE; font-size:0.85rem; margin-bottom:14px;">@zerowaste.lab • Pune Civic Initiative</p>
         </div>
         """, unsafe_allow_html=True)
         st.video("https://www.w3schools.com/html/mov_bbb.mp4")
@@ -300,7 +415,7 @@ elif st.session_state.active_nav == "community":
         resolved_count = sum(1 for h in st.session_state.hotspots if h["status"] == "Resolved")
         st.caption(f"🔴 **{pending_count} Active Overflow Spots** | 🟢 **{resolved_count} Cleared Cleanups**")
 
-        pune_map = folium.Map(location=[18.5204, 73.8567], zoom_start=13)
+        pune_dark_map = folium.Map(location=[18.5204, 73.8567], zoom_start=13, tiles="CartoDB dark_matter")
         for h in st.session_state.hotspots:
             is_pending = (h["status"] == "Pending")
             folium.Marker(
@@ -308,9 +423,9 @@ elif st.session_state.active_nav == "community":
                 popup=f"<b>{h['location']}</b><br>{h['waste_type']}<br>Status: {h['status']}",
                 tooltip=h['location'],
                 icon=folium.Icon(color="red" if is_pending else "green", icon="trash" if is_pending else "ok-sign", prefix="glyphicon")
-            ).add_to(pune_map)
+            ).add_to(pune_dark_map)
 
-        st_folium(pune_map, height=450, width=None, returned_objects=[])
+        st_folium(pune_dark_map, height=450, width=None, returned_objects=[])
 
     with form_col:
         st.markdown("### 🚨 Post an Overflowing Spot")
