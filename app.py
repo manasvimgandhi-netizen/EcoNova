@@ -1,7 +1,7 @@
 # app.py
 """
 EcoNova: Smart Waste Management Ecosystem
-Futuristic Smart City Dark Theme | AI Vision with Municipal Bin Color Guidance | Dark GIS Map
+Futuristic Smart City Theme | Deep Learning Vision AI | Municipal Bin Routing
 """
 
 import copy
@@ -18,9 +18,6 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ─────────────────────────────────────────────────────────────────────────────
-# STYLING
-# ─────────────────────────────────────────────────────────────────────────────
 st.markdown("""
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -264,7 +261,7 @@ st.markdown(f"""
 
 
 # =============================================================================
-# 1. SCAN WASTE (WITH BIN COLOR & NAME GUIDANCE)
+# 1. SCAN WASTE (DEEP LEARNING VISION AI + BIN GUIDANCE)
 # =============================================================================
 if st.session_state.active_nav == "scan":
     c_left, c_right = st.columns([1, 1], gap="large")
@@ -285,30 +282,33 @@ if st.session_state.active_nav == "scan":
                 st.image(up, use_container_width=True)
         else:
             preset = st.selectbox("Select Preset Demo Item:", [
+                "Textiles (Fabric Cloth / Towel / Clothes)",
                 "E-Waste (Computer Mouse / Cable / Hardware)",
                 "Stainless Steel / Metal Water Bottle",
                 "PET Plastic Bottle (Clean Recyclable)",
                 "Cardboard Box Packaging",
                 "Organic Food Scraps"
             ])
-            if "E-Waste" in preset:
-                st.session_state.detected_result = {"category": "E-Waste", "label": "E-Waste / Tech Hardware (Computer Peripheral / Gadget)", "confidence": 97.6, "tip": logic.SORTING_TIPS["E-Waste"], "auto_weight": 0.25, "bin_info": logic.get_bin_info("E-Waste")}
+            if "Textiles" in preset:
+                st.session_state.detected_result = {"category": "Textiles", "label": "Textile & Fabric (Cloth / Towel / Scraps)", "confidence": 98.6, "tip": logic.SORTING_TIPS["Textiles"], "auto_weight": 0.35, "bin_info": logic.get_bin_info("Textiles")}
+            elif "E-Waste" in preset:
+                st.session_state.detected_result = {"category": "E-Waste", "label": "E-Waste Hardware (Computer Mouse / Gadget)", "confidence": 97.8, "tip": logic.SORTING_TIPS["E-Waste"], "auto_weight": 0.25, "bin_info": logic.get_bin_info("E-Waste")}
             elif "Metal" in preset:
-                st.session_state.detected_result = {"category": "Metal", "label": "Metal & Aluminium (Stainless Steel / Can / Foil)", "confidence": 98.2, "tip": logic.SORTING_TIPS["Metal"], "auto_weight": 0.30, "bin_info": logic.get_bin_info("Metal")}
+                st.session_state.detected_result = {"category": "Metal", "label": "Metal & Aluminium (Stainless Steel Flask)", "confidence": 98.4, "tip": logic.SORTING_TIPS["Metal"], "auto_weight": 0.30, "bin_info": logic.get_bin_info("Metal")}
             elif "Plastic" in preset:
-                st.session_state.detected_result = {"category": "Plastic", "label": "Synthetic Plastic / Packaging Container", "confidence": 95.8, "tip": logic.SORTING_TIPS["Plastic"], "auto_weight": 0.08, "bin_info": logic.get_bin_info("Plastic")}
+                st.session_state.detected_result = {"category": "Plastic", "label": "Plastic Material (PET Bottle)", "confidence": 96.2, "tip": logic.SORTING_TIPS["Plastic"], "auto_weight": 0.08, "bin_info": logic.get_bin_info("Plastic")}
             elif "Cardboard" in preset:
-                st.session_state.detected_result = {"category": "Paper", "label": "Cardboard Box / Kraft Paper Packaging", "confidence": 95.0, "tip": logic.SORTING_TIPS["Paper"], "auto_weight": 0.20, "bin_info": logic.get_bin_info("Paper")}
+                st.session_state.detected_result = {"category": "Paper", "label": "Paper & Packaging (Cardboard Box)", "confidence": 95.8, "tip": logic.SORTING_TIPS["Paper"], "auto_weight": 0.20, "bin_info": logic.get_bin_info("Paper")}
             else:
-                st.session_state.detected_result = {"category": "Organic", "label": "Organic & Wet Food Waste (Compostable)", "confidence": 94.5, "tip": logic.SORTING_TIPS["Organic"], "auto_weight": 0.40, "bin_info": logic.get_bin_info("Organic")}
+                st.session_state.detected_result = {"category": "Organic", "label": "Organic Wet Waste (Fruit Scraps / Food)", "confidence": 95.0, "tip": logic.SORTING_TIPS["Organic"], "auto_weight": 0.40, "bin_info": logic.get_bin_info("Organic")}
 
-        # Analyze image
+        # Run Deep Learning Vision Inference
         if img_data:
             st.session_state.detected_result = logic.analyze_waste_image(img_data)
 
         st.markdown("#### 🏷️ Classification Confirmation")
-        cat_options = ["E-Waste", "Metal", "Plastic", "Paper", "Organic", "Glass", "Textiles", "Hazardous"]
-        detected_cat = st.session_state.detected_result["category"] if st.session_state.detected_result else "E-Waste"
+        cat_options = ["Textiles", "E-Waste", "Metal", "Plastic", "Paper", "Organic", "Glass", "Hazardous"]
+        detected_cat = st.session_state.detected_result["category"] if st.session_state.detected_result else "Textiles"
         chosen_cat = st.selectbox("Category Override (if needed):", cat_options, index=cat_options.index(detected_cat) if detected_cat in cat_options else 0)
 
         auto_w = logic.DEFAULT_CATEGORY_WEIGHTS.get(chosen_cat, 0.25)
@@ -326,16 +326,15 @@ if st.session_state.active_nav == "scan":
         st.markdown("### 🌍 Real-Time AI Detection & Bin Segregation")
         if st.session_state.detected_result:
             res = st.session_state.detected_result
-            st.success(f"✅ **AI Detection:** {res['label']} ({res['confidence']}% Confidence)")
+            st.success(f"✅ **Deep Learning Detection:** {res['label']} ({res['confidence']}% Confidence)")
             
-            # 🗑️ MUNICIPAL BIN COLOR & NAME CARD
             bin_meta = logic.get_bin_info(chosen_cat)
             st.markdown(f"""
             <div class="bin-card" style="background:{bin_meta['bg_color']}; border:1.5px solid {bin_meta['badge_color']};">
               <div style="font-size:2.2rem;">{bin_meta['icon']}</div>
               <div>
                 <div style="font-size:0.75rem; font-weight:800; color:{bin_meta['badge_color']}; text-transform:uppercase; letter-spacing:0.06em;">
-                  Required Disposal Bin ({bin_meta['bin_color']} Bin)
+                  Required Disposal Bin ({bin_meta['bin_color']})
                 </div>
                 <div style="font-size:1.1rem; font-weight:800; color:#FFFFFF; margin-top:2px;">
                   {bin_meta['bin_name']}
@@ -388,7 +387,7 @@ elif st.session_state.active_nav == "eco":
 
     with col_side:
         st.markdown("### 🌿 Segregation Golden Rule")
-        st.info("🟢 **Green Bin**: Wet & Kitchen Waste\n\n🔵 **Blue Bin**: Dry Recyclables (Plastic, Paper, Metal, Glass)\n\n⚫ **Black Bin**: E-Waste Drop-off\n\n🔴 **Red Bin**: Hazardous & Sanitary")
+        st.info("🟢 **Green Bin**: Wet & Kitchen Waste\n\n🔵 **Blue Bin**: Dry Recyclables (Plastic, Paper, Metal, Glass)\n\n🟣 **Textile Bin**: Clothes & Fabrics\n\n⚫ **Black Bin**: E-Waste Drop-off\n\n🔴 **Red Bin**: Hazardous & Sanitary")
 
 
 # =============================================================================
