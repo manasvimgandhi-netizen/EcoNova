@@ -39,7 +39,7 @@ eco_reels = [
         "title": "How I turned 5 plastic bottles into a vertical planter 🌱",
         "category": "DIY Reuse",
         "creator": "@rewild.pune",
-        "video_url": "https://youtube.com/shorts/utTOMe8FkqU?si=9KHctgi4N-i7kEBy",
+        "video_url": "https://youtube.com/shorts/mu7sbVlsv1A?si=a-6bOmrNn4eu7CfI",
         "likes": "1,240",
         "comments": "86",
         "shares": "312",
